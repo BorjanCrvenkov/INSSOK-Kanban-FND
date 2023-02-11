@@ -1,17 +1,18 @@
 import React from 'react';
-import {view, update, add} from "../Repository/WorkspaceRepository";
-import {Link, Routes, Route, useNavigate} from 'react-router-dom';
+import WorkspaceRepository from "../Repository/WorkspaceRepository";
+import Workspace from "./Workspace";
 
-
-class WorkspaceEdit extends React.Component {
+class WorkspaceForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
             isEdit: false,
             workspace: null,
-            name: null,
-            description: null,
+            name: '',
+            description: '',
+            repository: new WorkspaceRepository(),
+
         };
         this.onInputchange = this.onInputchange.bind(this);
         this.onSubmitForm = this.onSubmitForm.bind(this);
@@ -29,18 +30,21 @@ class WorkspaceEdit extends React.Component {
             'description': this.state.description
         };
 
+        let id = this.state.workspace.id;
+
         if(this.state.isEdit){
-            await updateWorkspace(this.state.workspace['id'], data)
+            await this.state.repository.update(id, data)
         }else{
-            await addWorkspace(data)
+            id = await this.state.repository.add(data);
         }
+        window.location.href = 'http://localhost:3000/workspaces/view/' + id
     }
 
     async componentDidMount() {
         const workspace_id = window.location.href.split("/").pop();
 
-        if(!isNaN(workspace_id)){
-            const data = await view(workspace_id);
+        if(!this.state.workspace){
+            const data = await this.state.repository.view(workspace_id)
             this.setState({workspace: data});
 
             this.setState({name: data['name']});
@@ -51,7 +55,7 @@ class WorkspaceEdit extends React.Component {
     }
 
     render() {
-        const {isLoading, workspace, isEdit} = this.state;
+        const {isLoading, isEdit} = this.state;
 
         if (isLoading && !isEdit) {
             return <h1>Loading workspace...</h1>
@@ -71,15 +75,11 @@ class WorkspaceEdit extends React.Component {
 }
 
 async function updateWorkspace(id, data) {
-    await update(id, data)
 
-    window.location.href = 'http://localhost:3000/workspaces/view/' + id
 }
 
 async function addWorkspace(data) {
-    const id = await add( data)
 
-    window.location.href = 'http://localhost:3000/workspaces/view/' + id
 }
 
-export default WorkspaceEdit;
+export default WorkspaceForm;
