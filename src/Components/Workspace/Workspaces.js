@@ -1,6 +1,6 @@
 import React from 'react';
 import Workspace from "./Workspace";
-import {index} from "../Repository/WorkspaceRepository";
+import WorkspaceRepository from "../Repository/WorkspaceRepository"
 
 class Workspaces extends React.Component {
     constructor(props) {
@@ -8,11 +8,16 @@ class Workspaces extends React.Component {
         this.state = {
             isLoading: true,
             workspaces: undefined,
+            repository: new WorkspaceRepository(),
         }
     }
 
     async componentDidMount() {
-        const data = await index();
+        let filters = getFilters();
+        let sorts = getSorts();
+        let includes = getIncludes();
+
+        const data = await this.state.repository.index(filters, sorts, includes);
         this.setState({workspaces: data});
         this.setState({isLoading: false})
     }
@@ -40,6 +45,18 @@ class Workspaces extends React.Component {
             </div>
         )
     }
+}
+
+function getFilters() {
+    return null;
+}
+
+function getSorts() {
+    return null;
+}
+
+function getIncludes() {
+    return null;
 }
 
 export default Workspaces;

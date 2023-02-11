@@ -3,16 +3,23 @@ import Home from "../Home/Home";
 import React from "react";
 import Workspaces from "../Workspace/Workspaces";
 import Workspace from "../Workspace/Workspace";
-import WorkspaceEdit from "../Workspace/WorkspaceEdit";
+import WorkspaceForm from "../Workspace/WorkspaceForm";
+import BoardForm from "../Board/BoardForm";
+import Board from "../Board/Board";
+import Boards from "../Board/Boards";
 
 const Navigation = () => {
     return (
         <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route path="/workspaces/add" element={<WorkspaceEdit /> }/>
-            <Route path="/workspaces/edit/:id" element={<WorkspaceEdit /> }/>
-            <Route path="/workspaces/view/:id" element={<Workspace workspace={null} /> }/>
-            <Route path="/workspaces" element={<Workspaces />}/>
+            <Route path="/boards/add" element={<BoardForm/>}/>
+            <Route path="/boards/edit/:id" element={<BoardForm/>}/>
+            <Route path="/boards/view/:id" element={<Board board={null}/>}/>
+            <Route path="/boards" element={<Boards/>}/>
+            <Route path="/workspaces/add" element={<WorkspaceForm/>}/>
+            <Route path="/workspaces/edit/:id" element={<WorkspaceForm/>}/>
+            <Route path="/workspaces/view/:id" element={<Workspace workspace={null}/>}/>
+            <Route path="/workspaces" element={<Workspaces/>}/>
         </Routes>
     );
 };
