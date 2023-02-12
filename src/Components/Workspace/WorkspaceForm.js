@@ -1,6 +1,5 @@
 import React from 'react';
 import WorkspaceRepository from "../Repository/WorkspaceRepository";
-import Workspace from "./Workspace";
 
 class WorkspaceForm extends React.Component {
     constructor(props) {
@@ -30,7 +29,7 @@ class WorkspaceForm extends React.Component {
             'description': this.state.description
         };
 
-        let id = this.state.workspace.id;
+        let id = this.state.workspace != null ? this.state.workspace.id : null;
 
         if(this.state.isEdit){
             await this.state.repository.update(id, data)
@@ -72,14 +71,6 @@ class WorkspaceForm extends React.Component {
             </div>
         );
     }
-}
-
-async function updateWorkspace(id, data) {
-
-}
-
-async function addWorkspace(data) {
-
 }
 
 export default WorkspaceForm;
