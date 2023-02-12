@@ -34,7 +34,7 @@ class BoardForm extends React.Component {
             'workspace_id': this.state.workspace_id
         };
 
-        let id = this.state.board.id;
+        let id = this.state.board != null ? this.state.board.id : null;
 
         if (this.state.isEdit) {
             await this.state.repository.update(id, data)
