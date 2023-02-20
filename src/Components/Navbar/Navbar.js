@@ -10,6 +10,9 @@ import Boards from "../Board/Boards";
 import ColumnForm from "../Column/ColumnForm";
 import Column from "../Column/Column";
 import Columns from "../Column/Columns";
+import Task from "../Task/Task";
+import Tasks from "../Task/Tasks"
+import TaskForm from "../Task/TaskForm"
 
 const Navigation = () => {
     return (
@@ -27,6 +30,9 @@ const Navigation = () => {
             <Route path="/workspaces/edit/:id" element={<WorkspaceForm/>}/>
             <Route path="/workspaces/view/:id" element={<Workspace workspace={null}/>}/>
             <Route path="/workspaces" element={<Workspaces/>}/>
+            <Route path="/tasks/add" element={<TaskForm/>}/>
+            <Route path="/tasks/edit/:id" element={<TaskForm/>}/>
+            <Route path="/tasks/view/:id" element={<Task task={null}/>}/>
         </Routes>
     );
 };

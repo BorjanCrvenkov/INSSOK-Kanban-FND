@@ -1,5 +1,6 @@
 import React from 'react';
 import TaskRepository from "../Repository/TaskRepository";
+import ColumnRepository from "../Repository/ColumnRepository";
 
 class TaskForm extends React.Component {
     constructor(props) {
@@ -20,10 +21,7 @@ class TaskForm extends React.Component {
             columns: null,
             columnRepository: new ColumnRepository(),
             reporters: null,
-            reporterRepository: new ReporterRepository(),
             assignees: null,
-            assigneeRepository: new AssigneeRepository()
-
         };
         this.onInputchange = this.onInputchange.bind(this);
         this.onSubmitForm = this.onSubmitForm.bind(this);
@@ -85,10 +83,10 @@ class TaskForm extends React.Component {
         const {isLoading, isEdit, workspace_id} = this.state;
 
         if (isLoading && !isEdit) {
-            return <h1>Loading tas...</h1>
+            return <h1>Loading task...</h1>
         }
 
-        let workspaces = this.state.workspaces;
+        let columns = this.state.columns;
 
         return (
             <div>
@@ -104,21 +102,9 @@ class TaskForm extends React.Component {
                 <label>Type</label>
                 <input type="text" name="type" value={this.state.type} onChange={this.onInputchange}/>
                 <label>Column</label>
-                <select name="column_id" onChange={this.onInputchange} defaultValue={column_id}>
-                    {column.map(function (column, key) {
+                <select name="column_id" onChange={this.onInputchange} defaultValue={this.state.column_id}>
+                    {columns.map(function (column, key) {
                             return <option value={column.id}>{column.name}</option>
-                    })}
-                </select>
-                <label>Reporter</label>
-                <select name="reporter_id" onChange={this.onInputchange} defaultValue={reporter_id}>
-                    {reporter.map(function (reporter, key) {
-                            return <option value={reporter.id}>{reporter.name}</option>
-                    })}
-                </select>
-                <label>Assignee</label>
-                <select name="assignee_id" onChange={this.onInputchange} defaultValue={assignee_id}>
-                    {assignee.map(function (assignee, key) {
-                            return <option value={assignee.id}>{assignee.name}</option>
                     })}
                 </select>
                 <button onClick={this.onSubmitForm}>Submit</button>

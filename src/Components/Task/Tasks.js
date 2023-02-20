@@ -13,7 +13,11 @@ class Tasks extends React.Component {
     }
 
     async componentDidMount() {
-        const data = await this.state.repository.index(null, null, null);
+        let filters = getFilters();
+        let sorts = getSorts();
+        let includes = getIncludes();
+
+        const data = await this.state.repository.index(filters, sorts, includes);
         this.setState({tasks: data});
         this.setState({isLoading: false})
     }
@@ -41,6 +45,18 @@ class Tasks extends React.Component {
             </div>
         )
     }
+}
+
+function getFilters() {
+    return null;
+}
+
+function getSorts() {
+    return null;
+}
+
+function getIncludes() {
+    return null;
 }
 
 export default Tasks;

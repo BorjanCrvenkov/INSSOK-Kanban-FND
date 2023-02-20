@@ -19,13 +19,16 @@ class Task extends React.Component {
     async componentDidMount() {
         if (this.state.task == null) {
 
-            let data = await this.fetchBoardAndReturnData();
+            let data = await this.fetchTaskAndReturnData();
             this.setState({task: data});
             this.setState({column: data.column});
             this.setState({reporter: data.reporter});
             this.setState({assignee: data.assignee});
             this.setState({isView: true});
         }
+        this.setState({column: this.state.column})
+        this.setState({board: this.state.column.board})
+        this.setState({tasks: this.state.column.tasks})
         this.setState({isLoading: false})
     }
 
@@ -49,11 +52,11 @@ class Task extends React.Component {
 
         return (
             <div>
-                <h3>{board['title']}</h3>
-                <h4>{board['description']}</h4>
-                <h4>{board['priority']}</h4>
-                <h4>{board['due_date']}</h4>
-                <h4>{board['type']}</h4>
+                <h3>{task['title']}</h3>
+                <h4>{task['description']}</h4>
+                <h4>{task['priority']}</h4>
+                <h4>{task['due_date']}</h4>
+                <h4>{task['type']}</h4>
                 {column &&
                 <h3>Column name: {column.name}</h3>
                 }
