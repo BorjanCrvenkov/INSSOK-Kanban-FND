@@ -20,6 +20,9 @@ const Header = () => {
                             <Link to={"/users"}>Users</Link>
                         </li>
                         <li>
+                            <Link to={"/tasks"}>Tasks</Link>
+                        </li>
+                        <li>
                             <Link to={"/me"}>My account</Link>
                         </li>
                     </ul>
