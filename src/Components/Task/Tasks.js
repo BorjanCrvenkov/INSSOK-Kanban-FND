@@ -56,7 +56,10 @@ function getSorts() {
 }
 
 function getIncludes() {
-    return null;
+    return [
+        'reporter',
+        'assignee'
+    ];
 }
 
 export default Tasks;

@@ -58,8 +58,8 @@ class TaskForm extends React.Component {
     async componentDidMount() {
         const task_id = window.location.href.split("/").pop();
 
-        let fetchedWorkspaces = await this.state.workspacesRepository.index(null, null, null);
-        this.setState({workspaces: fetchedWorkspaces});
+        let fetchedColumns = await this.state.columnRepository.index(null, null, null);
+        this.setState({columns: fetchedColumns});
 
         if (!isNaN(task_id)) {
             const data = await this.state.repository.view(task_id);

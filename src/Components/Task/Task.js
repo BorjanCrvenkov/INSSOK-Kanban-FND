@@ -27,8 +27,6 @@ class Task extends React.Component {
             this.setState({isView: true});
         }
         this.setState({column: this.state.column})
-        this.setState({board: this.state.column.board})
-        this.setState({tasks: this.state.column.tasks})
         this.setState({isLoading: false})
     }
 
@@ -92,9 +90,8 @@ function getSorts() {
 
 function getIncludes() {
     return [
-        'columns',
-        'reporters',
-        'assignees'
+        'reporter',
+        'assignee'
     ];
 }
 
