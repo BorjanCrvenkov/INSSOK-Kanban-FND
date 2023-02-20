@@ -34,9 +34,10 @@ class BoardForm extends React.Component {
             'workspace_id': this.state.workspace_id
         };
 
-        let id = this.state.board.id;
+        let id;
 
         if (this.state.isEdit) {
+            id = this.state.board.id;
             await this.state.repository.update(id, data)
         } else {
             id = await this.state.repository.add(data);
@@ -66,15 +67,18 @@ class BoardForm extends React.Component {
     render() {
         const {isLoading, isEdit, workspace_id} = this.state;
 
-        if (isLoading && !isEdit) {
+        if (isLoading && isEdit) {
             return <h1>Loading board...</h1>
+        }else if (isLoading && !isEdit) {
+            return <h1>Loading form...</h1>
         }
 
         let workspaces = this.state.workspaces;
+        let heading = isEdit ? <h1>Edit Board</h1> : <h1>Add Board</h1>;
 
         return (
             <div>
-                <h1>Edit board</h1>
+                {heading}
                 <label>Name</label>
                 <input type="text" name="name" value={this.state.name} onChange={this.onInputchange}/>
                 <label>Description</label>

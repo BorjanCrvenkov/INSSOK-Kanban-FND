@@ -1,6 +1,5 @@
 import React from 'react';
 import WorkspaceRepository from "../Repository/WorkspaceRepository";
-import Workspace from "./Workspace";
 
 class WorkspaceForm extends React.Component {
     constructor(props) {
@@ -30,11 +29,12 @@ class WorkspaceForm extends React.Component {
             'description': this.state.description
         };
 
-        let id = this.state.workspace.id;
+        let id;
 
-        if(this.state.isEdit){
+        if (this.state.isEdit) {
+            id = this.state.workspace.id;
             await this.state.repository.update(id, data)
-        }else{
+        } else {
             id = await this.state.repository.add(data);
         }
         window.location.href = 'http://localhost:3000/workspaces/view/' + id
@@ -43,8 +43,8 @@ class WorkspaceForm extends React.Component {
     async componentDidMount() {
         const workspace_id = window.location.href.split("/").pop();
 
-        if(!this.state.workspace){
-            const data = await this.state.repository.view(workspace_id)
+        if (!isNaN(workspace_id)) {
+            const data = await this.state.repository.view(workspace_id);
             this.setState({workspace: data});
 
             this.setState({name: data['name']});
@@ -57,13 +57,17 @@ class WorkspaceForm extends React.Component {
     render() {
         const {isLoading, isEdit} = this.state;
 
-        if (isLoading && !isEdit) {
+        if (isLoading && isEdit) {
             return <h1>Loading workspace...</h1>
+        }else if (isLoading && !isEdit) {
+            return <h1>Loading form...</h1>
         }
+
+        let heading = isEdit ? <h1>Edit Workspace</h1> : <h1>Add Workspace</h1>;
 
         return (
             <div>
-                <h1>Edit Workspace</h1>
+                {heading}
                 <label>Name</label>
                 <input type="text" name="name" value={this.state.name} onChange={this.onInputchange}/>
                 <label>Description</label>
@@ -72,14 +76,6 @@ class WorkspaceForm extends React.Component {
             </div>
         );
     }
-}
-
-async function updateWorkspace(id, data) {
-
-}
-
-async function addWorkspace(data) {
-
 }
 
 export default WorkspaceForm;
