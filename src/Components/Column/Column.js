@@ -45,7 +45,7 @@ class Column extends React.Component {
         const link = isView ? <a href={`/columns/edit/${column.id}`}>Edit column</a>
             : <a href={`/columns/view/${column.id}`}>View column</a>;
 
-        const delete_button = isView ? <button onClick={this.delete}>Delete board</button> : '';
+        const delete_button = isView ? <button onClick={this.delete}>Delete column</button> : '';
 
         return (
             <div>
