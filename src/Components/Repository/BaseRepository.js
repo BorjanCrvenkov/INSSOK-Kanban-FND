@@ -1,4 +1,4 @@
-import instance, {setAuthToken} from "../axios/axios";
+import instance from "../axios/axios";
 
 export default class Repository {
     constructor(modelName) {

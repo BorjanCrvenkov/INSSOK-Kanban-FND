@@ -29,7 +29,7 @@ class LoginForm extends React.Component {
 
         await this.state.repository.login(data);
 
-        // window.location.href = 'http://localhost:3000/workspaces'
+        window.location.href = 'http://localhost:3000/workspaces'
     }
 
 
