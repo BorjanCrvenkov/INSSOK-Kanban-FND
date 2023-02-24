@@ -1,4 +1,4 @@
-import instance from "../axios/axios";
+import instance, {setAuthToken} from "../axios/axios";
 
 export default class Repository {
     constructor(modelName) {
@@ -6,6 +6,8 @@ export default class Repository {
     }
 
     async index(filters, sorts, includes) {
+        this.checkIfTokenExistsAndIsNotExpired();
+
         let path = this.modelName;
 
         let requestParams = this.getRequestParams(filters, sorts, includes)
@@ -18,6 +20,8 @@ export default class Repository {
     }
 
     async view(id, filters, sorts, includes) {
+        this.checkIfTokenExistsAndIsNotExpired();
+
         let path = this.modelName + '/' + id;
 
         let requestParams = this.getRequestParams(filters, sorts, includes)
@@ -87,6 +91,8 @@ export default class Repository {
     }
 
     async update(id, data) {
+        this.checkIfTokenExistsAndIsNotExpired();
+
         const response = await instance.put(this.modelName + '/' + id, data);
 
         return response.data.data;
@@ -97,8 +103,39 @@ export default class Repository {
     };
 
     async add(data) {
+        this.checkIfTokenExistsAndIsNotExpired();
+
         const response = await instance.post(this.modelName, data);
 
         return response.data.data['id'];
+    }
+
+    async login(data){
+        await instance.post('/auth/login', data)
+            .then(response => {
+                let auth = response.data.auth;
+
+                let token = auth.plainTextToken;
+
+                let expires_at = auth.expires_at;
+
+                localStorage.setItem("token", token);
+                localStorage.setItem("expires_at", expires_at);
+            })
+
+        window.location.href = 'http://localhost:3000/workspaces'
+    }
+
+    checkIfTokenExistsAndIsNotExpired(){
+        let token = localStorage.getItem('token');
+        let expires_at = localStorage.getItem('expires_at');
+
+        if(token === null){
+            window.location.href = 'http://localhost:3000/login'
+        }
+
+        if(expires_at != null && Date.parse(expires_at) > Date.now()){
+            window.location.href = 'http://localhost:3000/login'
+        }
     }
 }

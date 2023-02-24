@@ -13,10 +13,13 @@ import Columns from "../Column/Columns";
 import UserForm from "../User/UserForm";
 import User from "../User/User";
 import Users from "../User/Users";
+import LoginForm from "../LoginForm";
 
 const Navigation = () => {
     return (
         <Routes>
+            <Route path="/register" element={<User user={null}/>}/>
+            <Route path="/login" element={<LoginForm/>}/>
             <Route path="/" element={<Home/>}/>
             <Route path="/users/add" element={<UserForm/>}/>
             <Route path="/users/edit/:id" element={<UserForm/>}/>

@@ -6,7 +6,9 @@ const instance = axios.create({
         'Access-Control-Allow-Origin' : '*',
         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH',
         'Content-Type': 'multipart/form-data/application/json',
-    }
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
 });
+
 
 export default instance;
