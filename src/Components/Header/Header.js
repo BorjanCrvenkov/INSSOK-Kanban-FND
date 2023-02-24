@@ -8,6 +8,12 @@ const Header = () => {
                 <div>
                     <ul className="navbar-nav mr-auto">
                         <li>
+                            <Link to={"/login"}>Log in</Link>
+                        </li>
+                        <li>
+                            <Link to={"/register"}>Register</Link>
+                        </li>
+                        <li>
                             <Link to={"/workspaces"}>Workspaces</Link>
                         </li>
                         <li>
