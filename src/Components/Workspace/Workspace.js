@@ -1,6 +1,8 @@
 import React from 'react';
 import WorkspaceRepository from "../Repository/WorkspaceRepository";
 import Board from "../Board/Board";
+import AddUserToWorkspace from "./AddUserToWorkspace";
+import UserWorkspaceRepository from "../Repository/UserWorkspaceRepository";
 
 
 class Workspace extends React.Component {
@@ -48,6 +50,10 @@ class Workspace extends React.Component {
                 {link}
                 {isView && <button onClick={this.delete}>Delete workspace</button>}
 
+                {!isCalledOnIndex &&
+                <AddUserToWorkspace workspace_id={workspace.id}/>
+                }
+
                 {!isCalledOnIndex && <div><h4>
                     {workspace_boards && workspace_boards.length > 0 ? "All workspace boards:" : "This workspace doesn't have boards"}
                 </h4>
@@ -68,6 +74,7 @@ class Workspace extends React.Component {
                         <th>Last Name</th>
                         <th>Username</th>
                         <th>Email</th>
+                        <th>Action</th>
                     </tr>
 
 
@@ -78,6 +85,10 @@ class Workspace extends React.Component {
                             <td>{user.last_name}</td>
                             <td>{user.username}</td>
                             <td>{user.email}</td>
+                            <td><button onClick={() => {
+                                deleteUserFromWorkspace(user.id, workspace.id)
+                            }
+                            }>Delete</button></td>
                         </tr>
                     })
                     }
@@ -106,6 +117,14 @@ class Workspace extends React.Component {
         const workspace_id = window.location.href.split("/").pop();
         return await this.state.repository.view(workspace_id, filters, sorts, includes);
     }
+}
+
+async function deleteUserFromWorkspace(user_id, workspace_id){
+    let user_workspace_repository = new UserWorkspaceRepository();
+
+    await user_workspace_repository.removeUserFromWorkspace(user_id, workspace_id);
+
+    window.location.href = 'http://localhost:3000/workspaces/view/' + workspace_id;
 }
 
 function getFilters() {

@@ -12,4 +12,19 @@ export default class UserRepository extends Repository{
 
         return response.data.data;
     }
+
+    async findByEmail(email){
+        let filters = {
+            'email': email
+        };
+
+        let user = await this.index(filters, null, null);
+
+        if(user == null){
+            console.log("User not found!")
+            return ;
+        }
+
+        return user;
+    }
 }
