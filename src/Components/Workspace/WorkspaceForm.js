@@ -59,7 +59,7 @@ class WorkspaceForm extends React.Component {
 
         if (isLoading && isEdit) {
             return <h1>Loading workspace...</h1>
-        }else if (isLoading && !isEdit) {
+        } else if (isLoading && !isEdit) {
             return <h1>Loading form...</h1>
         }
 
@@ -68,11 +68,17 @@ class WorkspaceForm extends React.Component {
         return (
             <div>
                 {heading}
-                <label>Name</label>
-                <input type="text" name="name" value={this.state.name} onChange={this.onInputchange}/>
-                <label>Description</label>
-                <input type="text" name="description" value={this.state.description} onChange={this.onInputchange}/>
-                <button onClick={this.onSubmitForm}>Submit</button>
+                <div>
+                    <form onSubmit={this.onSubmitForm}>
+                        <label className="mt-2">Name</label>
+                        <input type="text" name="name" value={this.state.name} onChange={this.onInputchange}
+                               className="form-control"/>
+                        <label className="mt-2">Description</label>
+                        <textarea name="description" value={this.state.description}
+                               onChange={this.onInputchange} className="form-control"/>
+                        <button onClick={this.onSubmitForm} className='btn btn-primary mt-3'>Submit</button>
+                    </form>
+                </div>
             </div>
         );
     }

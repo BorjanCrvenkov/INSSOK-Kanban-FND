@@ -4,31 +4,17 @@ import {Link} from 'react-router-dom';
 const Header = () => {
     return (
         <header>
-            <nav>
-                <div>
-                    <ul className="navbar-nav mr-auto">
-                        <li>
-                            <Link to={"/login"}>Log in</Link>
-                        </li>
-                        <li>
-                            <Link to={"/register"}>Register</Link>
-                        </li>
-                        <li>
-                            <Link to={"/workspaces"}>Workspaces</Link>
-                        </li>
-                        <li>
-                            <Link to={"/boards"}>Boards</Link>
-                        </li>
-                        <li>
-                            <Link to={"/columns"}>Columns</Link>
-                        </li>
-                        <li>
-                            <Link to={"/users"}>Users</Link>
-                        </li>
-                        <li>
-                            <Link to={"/me"}>My account</Link>
-                        </li>
-                    </ul>
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div className="navbar-nav">
+                        <Link to={"/workspaces"} className="nav-item nav-link">Workspaces</Link>
+                        <Link to={"/boards"} className="nav-item nav-link">Boards</Link>
+                        <Link to={"/columns"} className="nav-item nav-link">Columns</Link>
+                        <Link to={"/users"} className="nav-item nav-link">Users</Link>
+                        <Link to={"/login"} className="nav-item nav-link">Log in</Link>
+                        <Link to={"/register"} className="nav-item nav-link">Register</Link>
+                        <Link to={"/me"} className="nav-item nav-link">My account</Link>
+                    </div>
                 </div>
             </nav>
         </header>

@@ -68,16 +68,18 @@ class AddUserToWorkspace extends React.Component {
             <div>
                 <form onSubmit={this.onSubmitForm}>
                     <h3>Add user to workspace</h3>
-                    {error}
-                    <label>Email</label>
-                    <input type="email" name="email" value={this.state.email} onChange={this.onInputchange}/>
-                    <label>Access type</label>
-                    <select name="access_type" onChange={this.onInputchange}>
+                    <div>
+                        {error}
+                    </div>
+                    <label className="mt-2">Email</label>
+                    <input type="email" name="email" value={this.state.email} onChange={this.onInputchange} className="form-control"/>
+                    <label className="mt-2">Access type</label>
+                    <select name="access_type" onChange={this.onInputchange} className="form-control">
                         <option value={AccessType.USER} selected>User</option>
                         <option value={AccessType.MANAGER}>Manager</option>
                         <option value={AccessType.ADMIN}>Admin</option>
                     </select>
-                    <button type="submit">Submit</button>
+                    <button type="submit" className="btn btn-primary mt-3">Submit</button>
                 </form>
 
             </div>
