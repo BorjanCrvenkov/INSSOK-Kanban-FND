@@ -99,6 +99,8 @@ export default class Repository {
     };
 
     async deleteModel(id) {
+        this.checkIfTokenExistsAndIsNotExpired();
+
         await instance.delete(this.modelName + '/' + id);
     };
 
