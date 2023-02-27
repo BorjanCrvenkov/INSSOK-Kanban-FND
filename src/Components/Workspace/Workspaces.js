@@ -1,6 +1,7 @@
 import React from 'react';
 import Workspace from "./Workspace";
 import WorkspaceRepository from "../Repository/WorkspaceRepository"
+import WorkspaceIndex from "./WorkspaceIndex";
 
 class Workspaces extends React.Component {
     constructor(props) {
@@ -37,11 +38,13 @@ class Workspaces extends React.Component {
             <div>
                 <div>
                     <h1>Workspaces</h1>
-                    <a href={'/workspaces/add'}>Add workspace</a>
+                    <a href={'/workspaces/add'} className='btn btn-primary mt-3'>Add workspace</a>
                 </div>
+                <div className="row mt-3">
                 {workspaces.map(function (workspace, key) {
-                    return <Workspace workspace={workspace}/>
+                    return <WorkspaceIndex workspace={workspace}/>
                 })}
+                </div>
             </div>
         )
     }

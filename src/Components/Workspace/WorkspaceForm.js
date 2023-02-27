@@ -29,11 +29,12 @@ class WorkspaceForm extends React.Component {
             'description': this.state.description
         };
 
-        let id = this.state.workspace != null ? this.state.workspace.id : null;
+        let id;
 
-        if(this.state.isEdit){
+        if (this.state.isEdit) {
+            id = this.state.workspace.id;
             await this.state.repository.update(id, data)
-        }else{
+        } else {
             id = await this.state.repository.add(data);
         }
         window.location.href = 'http://localhost:3000/workspaces/view/' + id
@@ -42,8 +43,8 @@ class WorkspaceForm extends React.Component {
     async componentDidMount() {
         const workspace_id = window.location.href.split("/").pop();
 
-        if(!this.state.workspace){
-            const data = await this.state.repository.view(workspace_id)
+        if (!isNaN(workspace_id)) {
+            const data = await this.state.repository.view(workspace_id);
             this.setState({workspace: data});
 
             this.setState({name: data['name']});
@@ -56,18 +57,28 @@ class WorkspaceForm extends React.Component {
     render() {
         const {isLoading, isEdit} = this.state;
 
-        if (isLoading && !isEdit) {
+        if (isLoading && isEdit) {
             return <h1>Loading workspace...</h1>
+        } else if (isLoading && !isEdit) {
+            return <h1>Loading form...</h1>
         }
+
+        let heading = isEdit ? <h1>Edit Workspace</h1> : <h1>Add Workspace</h1>;
 
         return (
             <div>
-                <h1>Edit Workspace</h1>
-                <label>Name</label>
-                <input type="text" name="name" value={this.state.name} onChange={this.onInputchange}/>
-                <label>Description</label>
-                <input type="text" name="description" value={this.state.description} onChange={this.onInputchange}/>
-                <button onClick={this.onSubmitForm}>Submit</button>
+                {heading}
+                <div>
+                    <form onSubmit={this.onSubmitForm}>
+                        <label className="mt-2">Name</label>
+                        <input type="text" name="name" value={this.state.name} onChange={this.onInputchange}
+                               className="form-control"/>
+                        <label className="mt-2">Description</label>
+                        <textarea name="description" value={this.state.description}
+                               onChange={this.onInputchange} className="form-control"/>
+                        <button onClick={this.onSubmitForm} className='btn btn-primary mt-3'>Submit</button>
+                    </form>
+                </div>
             </div>
         );
     }

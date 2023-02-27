@@ -13,11 +13,21 @@ import Columns from "../Column/Columns";
 import Task from "../Task/Task";
 import Tasks from "../Task/Tasks"
 import TaskForm from "../Task/TaskForm"
+import UserForm from "../User/UserForm";
+import User from "../User/User";
+import Users from "../User/Users";
+import LoginForm from "../LoginForm";
 
 const Navigation = () => {
     return (
         <Routes>
+            <Route path="/register" element={<User user={null}/>}/>
+            <Route path="/login" element={<LoginForm/>}/>
             <Route path="/" element={<Home/>}/>
+            <Route path="/users/add" element={<UserForm/>}/>
+            <Route path="/users/edit/:id" element={<UserForm/>}/>
+            <Route path="/users/view/:id" element={<User user={null}/>}/>
+            <Route path="/users" element={<Users/>}/>
             <Route path="/columns/add" element={<ColumnForm/>}/>
             <Route path="/columns/edit/:id" element={<ColumnForm/>}/>
             <Route path="/columns/view/:id" element={<Column column={null}/>}/>

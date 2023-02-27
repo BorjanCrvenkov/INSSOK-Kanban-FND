@@ -33,9 +33,11 @@ class ColumnForm extends React.Component {
             'order': this.state.order,
             'board_id': this.state.board_id
         };
-        let id = this.state.column != null ? this.state.column.id : null;
+
+        let id;
 
         if (this.state.isEdit) {
+            id = this.state.column.id;
             await this.state.repository.update(id, data)
         } else {
             id = await this.state.repository.add(data);
@@ -67,6 +69,8 @@ class ColumnForm extends React.Component {
 
         if (isLoading && !isEdit) {
             return <h1>Loading board...</h1>
+        }else if (isLoading && !isEdit) {
+            return <h1>Loading form...</h1>
         }
 
         let boards = this.state.boards;

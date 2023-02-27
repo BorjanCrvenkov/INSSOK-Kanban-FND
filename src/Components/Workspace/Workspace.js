@@ -1,6 +1,8 @@
 import React from 'react';
 import WorkspaceRepository from "../Repository/WorkspaceRepository";
 import Board from "../Board/Board";
+import AddUserToWorkspace from "./AddUserToWorkspace";
+import UserWorkspaceRepository from "../Repository/UserWorkspaceRepository";
 
 
 class Workspace extends React.Component {
@@ -8,80 +10,96 @@ class Workspace extends React.Component {
         super(props);
         this.state = {
             isLoading: true,
-            workspace: props.workspace,
+            workspace: null,
             workspace_boards: null,
-            isView: false,
             repository: new WorkspaceRepository(),
-            isCalledOnIndex: true,
             users: null,
+            displayAddUser: false,
         };
         this.delete = this.delete.bind(this)
     }
 
     async componentDidMount() {
-        if (this.state.workspace == null) {
+        let data = await this.fetchWorkspaceAndReturnData();
 
-            let data = await this.fetchWorkspaceAndReturnData();
-
-            this.setState({workspace: data});
-            this.setState({workspace_boards: data.boards})
-            this.setState({users: data.users})
-            this.setState({isView: true})
-            this.setState({isCalledOnIndex: false})
-        }
+        this.setState({workspace: data});
+        this.setState({workspace_boards: data.boards})
+        this.setState({users: data.users})
         this.setState({isLoading: false})
     }
 
     render() {
-        const {isLoading, isView, workspace, workspace_boards, isCalledOnIndex, users} = this.state;
+        const {isLoading, workspace, workspace_boards, users, displayAddUser} = this.state;
 
         if (isLoading) {
             return <h1>Loading workspace...</h1>
         }
 
-        const link = this.getEditOrAddLink(workspace);
-
         return (
             <div>
                 <h3>{workspace['name']}</h3>
                 <h4>{workspace['description']}</h4>
-                {link}
-                {isView && <button onClick={this.delete}>Delete workspace</button>}
-
-                {!isCalledOnIndex && <div><h4>
-                    {workspace_boards && workspace_boards.length > 0 ? "All workspace boards:" : "This workspace doesn't have boards"}
-                </h4>
-                    <a href={'/boards/add'}>Add board</a>
+                <div className="btn-group mt-3" role="group">
+                    <button className="btn btn-primary" onClick={() => {
+                        this.setState({displayAddUser: !this.state.displayAddUser})
+                    }}>Add user to workspace</button>
+                    <a href={`/workspaces/edit/${workspace.id}`} className="btn btn-success" style={{'margin-left': '10px'}}>Edit workspace</a>
+                    <button onClick={this.delete} className="btn btn-danger" style={{'margin-left': '10px'}}>Delete workspace</button>
                 </div>
-                }
-
-                {!isCalledOnIndex && workspace_boards &&
-                workspace_boards.map(function (board, key) {
-                    return <Board board={board}/>
-                })
-                }
-
-                Users that have access to this workspace:
-                <table>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                    </tr>
-
-
-                    {!isCalledOnIndex && users &&
-                    users.map(function (user, key) {
-                        return <tr>
-                            <td>{user.first_name}</td>
-                            <td>{user.last_name}</td>
-                            <td>{user.username}</td>
-                            <td>{user.email}</td>
-                        </tr>
+                <div className="mt-3">
+                    {displayAddUser &&
+                    <AddUserToWorkspace workspace_id={workspace.id}/>
+                    }
+                </div>
+                <div className="mt-3"><div><h4>
+                        {workspace_boards && workspace_boards.length > 0 ? "All workspace boards:" : "This workspace doesn't have boards"}
+                    </h4>
+                        <a href={'/boards/add'} className='btn btn-primary'>Add board</a>
+                    </div>
+                </div>
+                <div className="mt-3">
+                    {workspace_boards &&
+                    workspace_boards.map(function (board, key) {
+                        return <Board board={board} className="mt-3"/>
                     })
                     }
-                </table>
+                </div>
+                {users && <div className="mt-4">
+                    <h3>Users that have access to this workspace:</h3>
+                    <table className="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {
+                        users.map(function (user, key) {
+                            return <tr>
+                                <td scope="col">{user.first_name}</td>
+                                <td scope="col">{user.last_name}</td>
+                                <td scope="col">{user.username}</td>
+                                <td scope="col">{user.email}</td>
+                                <td scope="col">
+                                    <button onClick={() => {
+                                        deleteUserFromWorkspace(user.id, workspace.id)
+                                    }
+                                    } className="btn btn-danger">Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        })
+                        }
+                        </tbody>
+
+                    </table>
+                </div>
+                }
 
             </div>
         );
@@ -93,11 +111,6 @@ class Workspace extends React.Component {
         window.location.href = 'http://localhost:3000/workspaces'
     }
 
-    getEditOrAddLink(workspace) {
-        return this.state.isView ? <a href={`/workspaces/edit/${workspace.id}`}>Edit workspace</a>
-            : <a href={`/workspaces/view/${workspace.id}`}>View workspace</a>;
-    }
-
     async fetchWorkspaceAndReturnData() {
         let filters = getFilters();
         let sorts = getSorts();
@@ -106,6 +119,14 @@ class Workspace extends React.Component {
         const workspace_id = window.location.href.split("/").pop();
         return await this.state.repository.view(workspace_id, filters, sorts, includes);
     }
+}
+
+async function deleteUserFromWorkspace(user_id, workspace_id) {
+    let user_workspace_repository = new UserWorkspaceRepository();
+
+    await user_workspace_repository.removeUserFromWorkspace(user_id, workspace_id);
+
+    window.location.href = 'http://localhost:3000/workspaces/view/' + workspace_id;
 }
 
 function getFilters() {
