@@ -37,11 +37,11 @@ class UserForm extends React.Component {
             'email': this.state.email,
         };
 
-        if(this.state.image != null){
+        if (this.state.image != null) {
             data['image'] = this.state.image;
         }
 
-        if(this.state.password.length !== 0){
+        if (this.state.password.length !== 0) {
             data['password'] = this.state.password
         }
 
@@ -61,61 +61,84 @@ class UserForm extends React.Component {
 
         if (!isNaN(user_id)) {
             const data = await this.state.repository.view(user_id);
-            this.setState({user: data});
+            this.setState({ user: data });
 
-            this.setState({first_name: data['first_name']});
-            this.setState({last_name: data['last_name']});
-            this.setState({username: data['username']});
-            this.setState({email: data['email']});
-            this.setState({isEdit: true})
+            this.setState({ first_name: data['first_name'] });
+            this.setState({ last_name: data['last_name'] });
+            this.setState({ username: data['username'] });
+            this.setState({ email: data['email'] });
+            this.setState({ isEdit: true })
         }
 
-        this.setState({isLoading: false})
+        this.setState({ isLoading: false })
     }
 
     imageChange = (e) => {
         e.preventDefault()
         let file = e.target.files[0];
-        this.setState({image: file})
+        this.setState({ image: file })
     }
 
     render() {
-        const {isLoading, isEdit} = this.state;
+        const { isLoading, isEdit } = this.state;
 
         if (isLoading && isEdit) {
             return <h1>Loading user...</h1>
-        }else if (isLoading && !isEdit) {
+        } else if (isLoading && !isEdit) {
             return <h1>Loading user...</h1>
         }
 
-        let heading = isEdit ? <h1>Edit User</h1> : <h1>Add User</h1>;
+        let heading = isEdit ? <h1>Edit User</h1> : <h1>Register</h1>;
 
         return (
-            <div>
-                {heading}
-                <form onSubmit={this.onSubmitForm}>
-                    <label>First name</label>
-                    <input type="text" name="first_name" value={this.state.first_name} onChange={this.onInputchange}/>
-                    <label>Last name</label>
-                    <input type="text" name="last_name" value={this.state.last_name} onChange={this.onInputchange}/>
-                    <label>Username</label>
-                    <input type="text" name="username" value={this.state.username} onChange={this.onInputchange}/>
-                    <label>Password</label>
-                    <input type="password" name="password" value={this.state.password} onChange={this.onInputchange}/>
-                    <label>Email</label>
-                    <input type="email" name="email" value={this.state.email} onChange={this.onInputchange}/>
-                    <label>Image</label>
-                    <input type="file" name="image" onChange={this.imageChange}/>
-                    <button type='submit'>Submit</button>
-                </form>
+            <div className="mt-5 mx-auto">
+                <div className="row justify-content-center">
+                    <div className="col-md-6">
+                        {heading}
+                        <form onSubmit={this.onSubmitForm}>
+                            <div className="form-outline mt-4">
+                                <label htmlfor="first_name">First name</label>
+                                <input type="text" name="first_name" id="first_name" className="form-control" value={this.state.first_name} onChange={this.onInputchange} />
+                            </div>
+
+                            <div className="form-outline mt-4">
+                                <label htmlfor="last_name">Last name</label>
+                                <input type="text" name="last_name" id="last_name" className="form-control" value={this.state.last_name} onChange={this.onInputchange} />
+                            </div>
+
+                            <div className="form-outline mt-4">
+                                <label htmlfor="username">Username</label>
+                                <input type="text" name="username" id="username" className="form-control" value={this.state.username} onChange={this.onInputchange} />
+                            </div>
+
+                            <div className="form-outline mt-4">
+                                <label htmlfor="password">Password</label>
+                                <input type="password" name="password" id="password" className="form-control" value={this.state.password} onChange={this.onInputchange} />
+                            </div>
+
+                            <div className="form-outline mt-4">
+                                <label htmlfor="email">Email</label>
+                                <input type="email" name="email" id="email" className="form-control" value={this.state.email} onChange={this.onInputchange} />
+                            </div>
+
+                            <div className="form-outline mt-4">
+                                <label htmlfor="image">Image</label>
+                                <input type="file" name="image" id="image" className="form-control-file" onChange={this.imageChange} />
+                            </div>
+
+                            <button type="submit" className="btn btn-primary mt-4">Submit</button>
+                        </form>
+                    </div>
+                </div>
             </div>
+
         );
     }
 
     uploadPicture = (e) => {
         this.setState({
-            picturePreview : URL.createObjectURL(e.target.files[0]),
-            pictureAsFile : e.target.files[0]
+            picturePreview: URL.createObjectURL(e.target.files[0]),
+            pictureAsFile: e.target.files[0]
         })
     };
 }
