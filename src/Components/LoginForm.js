@@ -35,7 +35,8 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-      <div class="w-25 mx-auto">
+      <div class="mt-5 w-25 mx-auto">
+        <h1>Log in</h1>
         <form>
           <div class="form-outline mt-4">
             <input type="email" id="id_email" class="form-control" />
