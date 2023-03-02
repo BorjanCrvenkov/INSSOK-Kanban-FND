@@ -37,11 +37,11 @@ class UserForm extends React.Component {
             'email': this.state.email,
         };
 
-        if(this.state.image != null){
+        if (this.state.image != null) {
             data['image'] = this.state.image;
         }
 
-        if(this.state.password.length !== 0){
+        if (this.state.password.length !== 0) {
             data['password'] = this.state.password
         }
 
@@ -84,7 +84,7 @@ class UserForm extends React.Component {
 
         if (isLoading && isEdit) {
             return <h1>Loading user...</h1>
-        }else if (isLoading && !isEdit) {
+        } else if (isLoading && !isEdit) {
             return <h1>Loading user...</h1>
         }
 
@@ -94,19 +94,43 @@ class UserForm extends React.Component {
             <div>
                 {heading}
                 <form onSubmit={this.onSubmitForm}>
-                    <label>First name</label>
-                    <input type="text" name="first_name" value={this.state.first_name} onChange={this.onInputchange}/>
-                    <label>Last name</label>
-                    <input type="text" name="last_name" value={this.state.last_name} onChange={this.onInputchange}/>
-                    <label>Username</label>
-                    <input type="text" name="username" value={this.state.username} onChange={this.onInputchange}/>
-                    <label>Password</label>
-                    <input type="password" name="password" value={this.state.password} onChange={this.onInputchange}/>
-                    <label>Email</label>
-                    <input type="email" name="email" value={this.state.email} onChange={this.onInputchange}/>
-                    <label>Image</label>
-                    <input type="file" name="image" onChange={this.imageChange}/>
-                    <button type='submit'>Submit</button>
+
+                    <div className="row">
+                        <div className="col">
+                            <label>First name</label>
+                            <input type="text" name="first_name" value={this.state.first_name}
+                                   onChange={this.onInputchange} className="form-control"/>
+                        </div>
+                        <div className="col">
+                            <label>Last name</label>
+                            <input type="text" name="last_name" value={this.state.last_name}
+                                   onChange={this.onInputchange} className="form-control"/>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col">
+                            <label>Username</label>
+                            <input type="text" name="username" value={this.state.username} onChange={this.onInputchange}
+                                   className="form-control"/>
+                        </div>
+                        <div className="col">
+                            <label>Password</label>
+                            <input type="password" name="password" value={this.state.password}
+                                   onChange={this.onInputchange} className="form-control"/>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col">
+                            <label>Email</label>
+                            <input type="email" name="email" value={this.state.email} onChange={this.onInputchange}
+                                   className="form-control"/>
+                        </div>
+                        <div className="col">
+                            <label>Image</label>
+                            <input type="file" name="image" onChange={this.imageChange} className="form-control"/>
+                        </div>
+                    </div>
+                    <button type='submit' className="btn btn-primary mt-3">Submit</button>
                 </form>
             </div>
         );
@@ -114,8 +138,8 @@ class UserForm extends React.Component {
 
     uploadPicture = (e) => {
         this.setState({
-            picturePreview : URL.createObjectURL(e.target.files[0]),
-            pictureAsFile : e.target.files[0]
+            picturePreview: URL.createObjectURL(e.target.files[0]),
+            pictureAsFile: e.target.files[0]
         })
     };
 }

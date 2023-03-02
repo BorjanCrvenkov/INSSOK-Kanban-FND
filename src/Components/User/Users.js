@@ -1,6 +1,7 @@
 import React from 'react';
 import UserRepository from "../Repository/UserRepository";
 import User from "./User";
+import UserIndex from "./UserIndex";
 
 class Users extends React.Component {
     constructor(props) {
@@ -37,11 +38,13 @@ class Users extends React.Component {
             <div>
                 <div>
                     <h1>Users</h1>
-                    <a href={'/users/add'}>Add new user</a>
+                    <a href={'/users/add'} className="btn btn-primary">Add new user</a>
                 </div>
+                <div className="row mt-3">
                 {users.map(function (user, key) {
-                    return <User user={user}/>
+                    return <UserIndex user={user}/>
                 })}
+                </div>
             </div>
         );
     };
