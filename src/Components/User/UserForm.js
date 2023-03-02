@@ -61,26 +61,26 @@ class UserForm extends React.Component {
 
         if (!isNaN(user_id)) {
             const data = await this.state.repository.view(user_id);
-            this.setState({ user: data });
+            this.setState({user: data});
 
-            this.setState({ first_name: data['first_name'] });
-            this.setState({ last_name: data['last_name'] });
-            this.setState({ username: data['username'] });
-            this.setState({ email: data['email'] });
-            this.setState({ isEdit: true })
+            this.setState({first_name: data['first_name']});
+            this.setState({last_name: data['last_name']});
+            this.setState({username: data['username']});
+            this.setState({email: data['email']});
+            this.setState({isEdit: true})
         }
 
-        this.setState({ isLoading: false })
+        this.setState({isLoading: false})
     }
 
     imageChange = (e) => {
         e.preventDefault()
         let file = e.target.files[0];
-        this.setState({ image: file })
+        this.setState({image: file})
     }
 
     render() {
-        const { isLoading, isEdit } = this.state;
+        const {isLoading, isEdit} = this.state;
 
         if (isLoading && isEdit) {
             return <h1>Loading user...</h1>
@@ -96,42 +96,50 @@ class UserForm extends React.Component {
                     <div className="col-md-6">
                         {heading}
                         <form onSubmit={this.onSubmitForm}>
-                            <div className="form-outline mt-4">
-                                <label htmlfor="first_name">First name</label>
-                                <input type="text" name="first_name" id="first_name" className="form-control" value={this.state.first_name} onChange={this.onInputchange} />
-                            </div>
 
-                            <div className="form-outline mt-4">
-                                <label htmlfor="last_name">Last name</label>
-                                <input type="text" name="last_name" id="last_name" className="form-control" value={this.state.last_name} onChange={this.onInputchange} />
+                            <div className="row">
+                                <div className="col">
+                                    <label>First name</label>
+                                    <input type="text" name="first_name" value={this.state.first_name}
+                                           onChange={this.onInputchange} className="form-control"/>
+                                </div>
+                                <div className="col">
+                                    <label>Last name</label>
+                                    <input type="text" name="last_name" value={this.state.last_name}
+                                           onChange={this.onInputchange} className="form-control"/>
+                                </div>
                             </div>
-
-                            <div className="form-outline mt-4">
-                                <label htmlfor="username">Username</label>
-                                <input type="text" name="username" id="username" className="form-control" value={this.state.username} onChange={this.onInputchange} />
+                            <div className="row">
+                                <div className="col">
+                                    <label>Username</label>
+                                    <input type="text" name="username" value={this.state.username}
+                                           onChange={this.onInputchange}
+                                           className="form-control"/>
+                                </div>
+                                <div className="col">
+                                    <label>Password</label>
+                                    <input type="password" name="password" value={this.state.password}
+                                           onChange={this.onInputchange} className="form-control"/>
+                                </div>
                             </div>
-
-                            <div className="form-outline mt-4">
-                                <label htmlfor="password">Password</label>
-                                <input type="password" name="password" id="password" className="form-control" value={this.state.password} onChange={this.onInputchange} />
+                            <div className="row">
+                                <div className="col">
+                                    <label>Email</label>
+                                    <input type="email" name="email" value={this.state.email}
+                                           onChange={this.onInputchange}
+                                           className="form-control"/>
+                                </div>
+                                <div className="col">
+                                    <label>Image</label>
+                                    <input type="file" name="image" onChange={this.imageChange}
+                                           className="form-control"/>
+                                </div>
                             </div>
-
-                            <div className="form-outline mt-4">
-                                <label htmlfor="email">Email</label>
-                                <input type="email" name="email" id="email" className="form-control" value={this.state.email} onChange={this.onInputchange} />
-                            </div>
-
-                            <div className="form-outline mt-4">
-                                <label htmlfor="image">Image</label>
-                                <input type="file" name="image" id="image" className="form-control-file" onChange={this.imageChange} />
-                            </div>
-
-                            <button type="submit" className="btn btn-primary mt-4">Submit</button>
+                            <button type='submit' className="btn btn-primary mt-3">Submit</button>
                         </form>
                     </div>
                 </div>
             </div>
-
         );
     }
 
