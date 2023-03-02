@@ -88,50 +88,57 @@ class UserForm extends React.Component {
             return <h1>Loading user...</h1>
         }
 
-        let heading = isEdit ? <h1>Edit User</h1> : <h1>Add User</h1>;
+        let heading = isEdit ? <h1>Edit User</h1> : <h1>Register</h1>;
 
         return (
-            <div>
-                {heading}
-                <form onSubmit={this.onSubmitForm}>
+            <div className="mt-5 mx-auto">
+                <div className="row justify-content-center">
+                    <div className="col-md-6">
+                        {heading}
+                        <form onSubmit={this.onSubmitForm}>
 
-                    <div className="row">
-                        <div className="col">
-                            <label>First name</label>
-                            <input type="text" name="first_name" value={this.state.first_name}
-                                   onChange={this.onInputchange} className="form-control"/>
-                        </div>
-                        <div className="col">
-                            <label>Last name</label>
-                            <input type="text" name="last_name" value={this.state.last_name}
-                                   onChange={this.onInputchange} className="form-control"/>
-                        </div>
+                            <div className="row">
+                                <div className="col">
+                                    <label>First name</label>
+                                    <input type="text" name="first_name" value={this.state.first_name}
+                                           onChange={this.onInputchange} className="form-control"/>
+                                </div>
+                                <div className="col">
+                                    <label>Last name</label>
+                                    <input type="text" name="last_name" value={this.state.last_name}
+                                           onChange={this.onInputchange} className="form-control"/>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col">
+                                    <label>Username</label>
+                                    <input type="text" name="username" value={this.state.username}
+                                           onChange={this.onInputchange}
+                                           className="form-control"/>
+                                </div>
+                                <div className="col">
+                                    <label>Password</label>
+                                    <input type="password" name="password" value={this.state.password}
+                                           onChange={this.onInputchange} className="form-control"/>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col">
+                                    <label>Email</label>
+                                    <input type="email" name="email" value={this.state.email}
+                                           onChange={this.onInputchange}
+                                           className="form-control"/>
+                                </div>
+                                <div className="col">
+                                    <label>Image</label>
+                                    <input type="file" name="image" onChange={this.imageChange}
+                                           className="form-control"/>
+                                </div>
+                            </div>
+                            <button type='submit' className="btn btn-primary mt-3">Submit</button>
+                        </form>
                     </div>
-                    <div className="row">
-                        <div className="col">
-                            <label>Username</label>
-                            <input type="text" name="username" value={this.state.username} onChange={this.onInputchange}
-                                   className="form-control"/>
-                        </div>
-                        <div className="col">
-                            <label>Password</label>
-                            <input type="password" name="password" value={this.state.password}
-                                   onChange={this.onInputchange} className="form-control"/>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col">
-                            <label>Email</label>
-                            <input type="email" name="email" value={this.state.email} onChange={this.onInputchange}
-                                   className="form-control"/>
-                        </div>
-                        <div className="col">
-                            <label>Image</label>
-                            <input type="file" name="image" onChange={this.imageChange} className="form-control"/>
-                        </div>
-                    </div>
-                    <button type='submit' className="btn btn-primary mt-3">Submit</button>
-                </form>
+                </div>
             </div>
         );
     }
