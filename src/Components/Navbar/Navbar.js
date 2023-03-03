@@ -17,6 +17,10 @@ import UserForm from "../User/UserForm";
 import User from "../User/User";
 import Users from "../User/Users";
 import LoginForm from "../LoginForm";
+import Comment from "../Comment/Comment";
+import Comments from "../Comment/Comments";
+import CommentForm from "../Comment/CommentForm";
+
 
 const Navigation = () => {
     return (
@@ -45,6 +49,11 @@ const Navigation = () => {
             <Route path="/tasks/add" element={<TaskForm/>}/>
             <Route path="/tasks/edit/:id" element={<TaskForm/>}/>
             <Route path="/tasks/view/:id" element={<Task task={null}/>}/>
+            
+            <Route path="/comments" element={<Comments/>}/>
+            <Route path="/comments/add" element={<CommentForm/>}/>
+            <Route path="/comments/edit/:id" element={<CommentForm/>}/>
+            <Route path="/comments/view/:id" element={<Comment comment={null}/>}/>
         </Routes>
     );
 };

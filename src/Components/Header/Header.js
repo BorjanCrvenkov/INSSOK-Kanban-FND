@@ -12,6 +12,7 @@ const Header = () => {
                         <Link to={"/columns"} className="nav-item nav-link">Columns</Link>
                         <Link to={"/tasks"} className="nav-item nav-link">Tasks</Link>
                         <Link to={"/users"} className="nav-item nav-link">Users</Link>
+                        <Link to={"/comments"} className="nav-item nav-link">Comments</Link>
                     </div>
                     <div className="navbar-nav ms-auto">
                         {localStorage.getItem('token') == null
