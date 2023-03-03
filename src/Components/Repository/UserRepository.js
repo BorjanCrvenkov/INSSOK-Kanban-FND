@@ -27,4 +27,12 @@ export default class UserRepository extends Repository{
 
         return user;
     }
+
+    async getAuthUserInfo(){
+        this.checkIfTokenExistsAndIsNotExpired();
+
+        const response = await instance.get('/auth/user');
+
+        return response.data.data;
+    }
 }

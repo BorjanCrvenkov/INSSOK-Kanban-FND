@@ -25,6 +25,7 @@ import CommentForm from "../Comment/CommentForm";
 const Navigation = () => {
     return (
         <Routes>
+                <Route path="/me" element={<User user={null}/>}/>
             <Route path="/register" element={<UserForm user={null}/>}/>
             <Route path="/login" element={<LoginForm/>}/>
             <Route path="/" element={<Home/>}/>

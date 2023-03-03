@@ -15,6 +15,12 @@ class User extends React.Component {
 
     async componentDidMount() {
 
+        if(window.location.href.split("/").pop() === 'me'){
+            let user = await this.state.repository.getAuthUserInfo();
+
+            this.setState({user: user});
+        }
+
         if (this.state.user == null) {
             let data = await this.fetchUserAndReturnData();
 
@@ -41,13 +47,13 @@ class User extends React.Component {
         const link = this.getEditOrAddLink(user);
 
         return (
-            <div>
-                {link}
-                <p>{user.first_name}</p>
-                <p>{user.last_name}</p>
-                <p>{user.username}</p>
-                <p>{user.email}</p>
-                <img src={user.image_link} />
+            <div className="card m-3" style={{width: '25rem'}}>
+                <img className="card-img-top" src={user['image_link']}/>
+                <div className="card-body d-flex flex-column ">
+                    <h5 className="card-title">{user['first_name']} {user['last_name']}</h5>
+                    <p className="card-text">{user['email']}</p>
+                    <a href={`/users/edit/${user.id}`} className="btn btn-primary mt-auto">Edit user</a>
+                </div>
             </div>
         );
     }

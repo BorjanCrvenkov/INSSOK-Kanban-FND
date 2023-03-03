@@ -15,9 +15,17 @@ const Header = () => {
                         <Link to={"/comments"} className="nav-item nav-link">Comments</Link>
                     </div>
                     <div className="navbar-nav ms-auto">
-                        <Link to={"/me"} className="nav-item nav-link">My account</Link>
-                        <Link to={"/login"} className="nav-item nav-link">Log in</Link>
+                        {localStorage.getItem('token') == null
+                        && <Link to={"/login"} className="nav-item nav-link">Log in</Link>
+                        }
+                        {localStorage.getItem('token') == null
+                        &&
                         <Link to={"/register"} className="nav-item nav-link">Register</Link>
+                        }
+                        {localStorage.getItem('token') != null
+                        && <Link to={"/me"} className="nav-item nav-link">My account</Link>
+                        }
+
                     </div>
                 </div>
             </nav>
