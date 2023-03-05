@@ -23,13 +23,15 @@ class WorkspaceForm extends React.Component {
         });
     }
 
-    async onSubmitForm() {
+    async onSubmitForm(e) {
+        e.preventDefault();
         const data = {
             'name': this.state.name,
             'description': this.state.description
         };
 
         let id;
+
 
         if (this.state.isEdit) {
             id = this.state.workspace.id;

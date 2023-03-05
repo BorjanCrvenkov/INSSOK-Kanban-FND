@@ -27,7 +27,8 @@ class BoardForm extends React.Component {
         });
     }
 
-    async onSubmitForm() {
+    async onSubmitForm(e) {
+        e.preventDefault();
         const data = {
             'name': this.state.name,
             'description': this.state.description,
@@ -79,17 +80,23 @@ class BoardForm extends React.Component {
         return (
             <div>
                 {heading}
-                <label>Name</label>
-                <input type="text" name="name" value={this.state.name} onChange={this.onInputchange}/>
-                <label>Description</label>
-                <input type="text" name="description" value={this.state.description} onChange={this.onInputchange}/>
-                <label>Workspace</label>
-                <select name="workspace_id" onChange={this.onInputchange} defaultValue={workspace_id}>
-                    {workspaces.map(function (workspace, key) {
-                            return <option value={workspace.id}>{workspace.name}</option>
-                    })}
-                </select>
-                <button onClick={this.onSubmitForm}>Submit</button>
+                <div>
+                    <form onSubmit={this.onSubmitForm}>
+                        <label>Name</label>
+                        <input type="text" name="name" value={this.state.name} onChange={this.onInputchange}  className="form-control"/>
+                        <label>Description</label>
+                        <input type="text" name="description" value={this.state.description} onChange={this.onInputchange}  className="form-control"/>
+                        <label>Workspace</label>
+                        <select name="workspace_id" onChange={this.onInputchange} defaultValue={workspace_id} className="form-select">
+                            {workspaces.map(function (workspace, key) {
+                                return <option value={workspace.id}>{workspace.name}</option>
+                            })}
+                        </select>
+
+                        <button className="btn btn-primary mt-3">Submit</button>
+                    </form>
+                </div>
+
             </div>
         );
     }

@@ -27,7 +27,8 @@ class ColumnForm extends React.Component {
         });
     }
 
-    async onSubmitForm() {
+    async onSubmitForm(e) {
+        e.preventDefault();
         const data = {
             'name': this.state.name,
             'order': this.state.order,

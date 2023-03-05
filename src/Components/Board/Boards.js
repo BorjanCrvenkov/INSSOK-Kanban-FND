@@ -1,6 +1,7 @@
 import React from 'react';
 import Board from "./Board";
 import BoardRepository from "../Repository/BoardRepository"
+import BoardIndex from "./BoardIndex";
 
 class Boards extends React.Component {
     constructor(props) {
@@ -33,11 +34,13 @@ class Boards extends React.Component {
             <div>
                 <div>
                     <h1>Boards</h1>
-                    <a href={'/boards/add'}>Add board</a>
+                    <a href={'/boards/add'} className="btn btn-primary">Add board</a>
                 </div>
+                <div className="row mt-3">
                 {boards.map(function (board, key) {
-                    return <Board board={board}/>
+                    return <BoardIndex board={board}/>
                 })}
+                </div>
             </div>
         )
     }

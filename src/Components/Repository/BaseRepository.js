@@ -19,7 +19,7 @@ export default class Repository {
         return response.data.data;
     }
 
-    async view(id, filters, sorts, includes) {
+    async view(id, filters = null, sorts = null, includes = null) {
         this.checkIfTokenExistsAndIsNotExpired();
 
         let path = this.modelName + '/' + id;
@@ -105,14 +105,16 @@ export default class Repository {
     };
 
     async add(data) {
-        this.checkIfTokenExistsAndIsNotExpired();
+        if (window.location.href.split("/").pop() !== 'register') {
+            this.checkIfTokenExistsAndIsNotExpired();
+        }
 
         const response = await instance.post(this.modelName, data);
 
         return response.data.data['id'];
     }
 
-    async login(data){
+    async login(data) {
         await instance.post('/auth/login', data)
             .then(response => {
                 let auth = response.data.auth;
@@ -128,15 +130,15 @@ export default class Repository {
         window.location.href = 'http://localhost:3000/workspaces'
     }
 
-    checkIfTokenExistsAndIsNotExpired(){
+    checkIfTokenExistsAndIsNotExpired() {
         let token = localStorage.getItem('token');
         let expires_at = localStorage.getItem('expires_at');
 
-        if(token === null){
+        if (token === null) {
             window.location.href = 'http://localhost:3000/login'
         }
 
-        if(expires_at != null && Date.parse(expires_at) > Date.now()){
+        if (expires_at != null && Date.parse(expires_at) > Date.now()) {
             window.location.href = 'http://localhost:3000/login'
         }
     }

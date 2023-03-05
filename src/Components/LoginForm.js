@@ -35,25 +35,17 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-      <div class="mt-5 w-25 mx-auto">
-        <h1>Log in</h1>
-        <form>
-          <div class="form-outline mt-4">
-            <input type="email" id="id_email" class="form-control" />
-            <label class="form-label" for="id_email">Email address</label>
-          </div>
-
-          <div class="form-outline mt-4">
-            <input type="password" id="id_password" class="form-control" />
-            <label class="form-label" for="id_password">Password</label>
-          </div>
-
-          <button type="button" class="btn btn-primary btn-block mt-4">Sign in</button>
-        </form>
-      </div>
-    );
+        <div>
+          <form onSubmit={this.onSubmitForm}>
+            <label>Email</label>
+            <input type="email" name="email" value={this.state.email} onChange={this.onInputchange} required/>
+            <label>Password</label>
+            <input type="password" name="password" value={this.state.password} onChange={this.onInputchange} required/>
+            <button type='submit'>Submit</button>
+          </form>
+        </div>
+    )
   }
-
 }
 
 export default LoginForm;

@@ -1,8 +1,8 @@
 import React from 'react';
 import WorkspaceRepository from "../Repository/WorkspaceRepository";
-import Board from "../Board/Board";
 import AddUserToWorkspace from "./AddUserToWorkspace";
 import UserWorkspaceRepository from "../Repository/UserWorkspaceRepository";
+import BoardIndex from "../Board/BoardIndex";
 
 
 class Workspace extends React.Component {
@@ -57,10 +57,10 @@ class Workspace extends React.Component {
                         <a href={'/boards/add'} className='btn btn-primary'>Add board</a>
                     </div>
                 </div>
-                <div className="mt-3">
+                <div className="mt-3" style={{display: "flex", justifyContent: "center", height: "100%"}}>
                     {workspace_boards &&
                     workspace_boards.map(function (board, key) {
-                        return <Board board={board} className="mt-3"/>
+                        return <BoardIndex board={board} className="mt-3"/>
                     })
                     }
                 </div>

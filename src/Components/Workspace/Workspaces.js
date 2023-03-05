@@ -1,5 +1,4 @@
 import React from 'react';
-import Workspace from "./Workspace";
 import WorkspaceRepository from "../Repository/WorkspaceRepository"
 import WorkspaceIndex from "./WorkspaceIndex";
 

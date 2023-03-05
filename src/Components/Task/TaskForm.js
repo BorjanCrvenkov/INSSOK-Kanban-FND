@@ -33,7 +33,8 @@ class TaskForm extends React.Component {
         });
     }
 
-    async onSubmitForm() {
+    async onSubmitForm(e) {
+        e.preventDefault();
         const data = {
             'title': this.state.title,
             'description': this.state.description,

@@ -28,7 +28,7 @@ class UserForm extends React.Component {
     }
 
     async onSubmitForm(e) {
-        e.preventDefault()
+        e.preventDefault();
 
         const data = {
             'first_name': this.state.first_name,
