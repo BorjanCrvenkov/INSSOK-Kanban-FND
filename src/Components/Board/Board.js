@@ -17,6 +17,8 @@ class Board extends React.Component {
             task_repository: new TaskRepository(),
             workspace: null,
             columns: null,
+            users: [],
+            columnTasks: [],
         };
     }
 
@@ -27,28 +29,33 @@ class Board extends React.Component {
             this.setState({board: data});
             this.setState({workspace: data.workspace})
             this.setState({isView: true})
+            this.setState({users: data.workspace.users})
 
             let obj = {};
+            let columnTasks = [];
 
             let columns = data['columns']
 
             for (let column in columns) {
                 let temp = columns[column];
+                columnTasks[temp.id] = temp.tasks
 
                 obj[temp['id']] = {
                     'id': temp.id,
                     'name': temp.name,
-                    'items': temp.tasks
+                    'tasks': temp.tasks
                 }
             }
 
             this.setState({columns: obj})
+            this.setState({columnTasks: columnTasks})
         }
+
         this.setState({isLoading: false})
     }
 
     render() {
-        let {isLoading, board} = this.state;
+        let {isLoading, board, users} = this.state;
         let stateColumns = this.state.columns;
 
         if (isLoading) {
@@ -56,71 +63,83 @@ class Board extends React.Component {
         }
 
         return (
-            <div style={{display: "flex", justifyContent: "center", height: "100%"}}>
-                <DragDropContext
-                    onDragEnd={result => this.onDragEnd(result, stateColumns)}
-                >
-                    {Object.entries(stateColumns).map(([columnId, column], index) => {
-                        return (
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center"
-                                }}
-                                key={columnId}
-                            >
-                                <h3>{column.name}</h3>
-                                <div style={{margin: 8}}>
-                                    <Droppable droppableId={columnId} key={columnId}>
-                                        {(provided, snapshot) => {
-                                            return (
-                                                <div
-                                                    {...provided.droppableProps}
-                                                    ref={provided.innerRef}
-                                                    className='mt-3 p-3 border border-dark'
-                                                >
-                                                    {column.items.map((item, index) => {
-                                                        return (
-                                                            <Draggable
-                                                                key={String(item.id)}
-                                                                draggableId={String(item.id)}
-                                                                index={index}
-                                                            >
-                                                                {(provided, snapshot) => {
-                                                                    return (
-                                                                        <div ref={provided.innerRef}
-                                                                             {...provided.draggableProps}
-                                                                             {...provided.dragHandleProps}>
-                                                                            <div className="card bg-light mb-3"
-                                                                                 style={{'width': '200px'}}>
-                                                                                <div className="card-body">
-                                                                                    <h5 className="card-title">{item['title']}</h5>
-                                                                                    <p className="card-text">{item['priority']}</p>
+            <div>
+                <div className="mt-2 mb-4">
+                    <label>Filter by user</label>
+                    <select className="form-select" id="assigneeFilter" multiple onChange={this.filterByAssigneeOnChange.bind(this)}>
+                        <option value="All">All</option>
+                        {users && users.map(function (user, key) {
+                            return <option value={user.id}>{user.first_name} {user.last_name}</option>
+                        })}
+                    </select>
+                </div>
+                <div style={{display: "flex", justifyContent: "center", height: "100%"}}>
+                    <DragDropContext
+                        onDragEnd={result => this.onDragEnd(result, stateColumns)}
+                    >
+                        {Object.entries(stateColumns).map(([columnId, column], index) => {
+                            return (
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center"
+                                    }}
+                                    key={columnId}
+                                >
+                                    <h3>{column.name}</h3>
+                                    <div style={{margin: 8}}>
+                                        <Droppable droppableId={columnId} key={columnId}>
+                                            {(provided, snapshot) => {
+                                                return (
+                                                    <div
+                                                        {...provided.droppableProps}
+                                                        ref={provided.innerRef}
+                                                        className='mt-3 p-3 border border-dark'
+                                                    >
+                                                        {column.tasks.map((item, index) => {
+                                                            return (
+                                                                <Draggable
+                                                                    key={String(item.id)}
+                                                                    draggableId={String(item.id)}
+                                                                    index={index}
+                                                                >
+                                                                    {(provided, snapshot) => {
+                                                                        return (
+                                                                            <div ref={provided.innerRef}
+                                                                                 {...provided.draggableProps}
+                                                                                 {...provided.dragHandleProps}>
+                                                                                <div className="card bg-light mb-3"
+                                                                                     style={{'width': '200px'}}>
+                                                                                    <div className="card-body">
+                                                                                        <h5 className="card-title">{item['title']}</h5>
+                                                                                        <p className="card-text">{item['priority']}</p>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                    );
-                                                                }}
-                                                            </Draggable>
-                                                        );
-                                                    })}
-                                                    {provided.placeholder}
-                                                    <div>
-                                                        <TaskModal column={column} workspace_id={board.workspace_id}/>
+                                                                        );
+                                                                    }}
+                                                                </Draggable>
+                                                            );
+                                                        })}
+                                                        {provided.placeholder}
+                                                        <div>
+                                                            <TaskModal column={column}
+                                                                       workspace_id={board.workspace_id}/>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            );
-                                        }}
-                                    </Droppable>
+                                                );
+                                            }}
+                                        </Droppable>
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
-                </DragDropContext>
+                            );
+                        })}
+                    </DragDropContext>
 
-                <div>
-                    <ColumnModal board={board}/>
+                    <div>
+                        <ColumnModal board={board}/>
+                    </div>
                 </div>
             </div>
         );
@@ -133,48 +152,97 @@ class Board extends React.Component {
         if (source.droppableId !== destination.droppableId) {
             const sourceColumn = columns[source.droppableId];
             const destColumn = columns[destination.droppableId];
-            const sourceItems = [...sourceColumn.items];
-            const destItems = [...destColumn.items];
-            const [removed] = sourceItems.splice(source.index, 1);
-            destItems.splice(destination.index, 0, removed);
+            const sourceTasks = [...sourceColumn.tasks];
+            const destTasks = [...destColumn.tasks];
+            const [removed] = sourceTasks.splice(source.index, 1);
+            destTasks.splice(destination.index, 0, removed);
             this.setState({
                 columns: {
                     ...columns,
                     [source.droppableId]: {
                         ...sourceColumn,
-                        items: sourceItems
+                        tasks: sourceTasks
                     },
                     [destination.droppableId]: {
                         ...destColumn,
-                        items: destItems
+                        tasks: destTasks
                     }
                 }
             });
 
-            this.updateColumnsOrder(sourceItems)
-            this.updateColumnsOrder(destItems);
+            this.updateColumnsOrder(sourceTasks)
+            this.updateColumnsOrder(destTasks);
         } else {
             const column = columns[source.droppableId];
-            const copiedItems = [...column.items];
-            const [removed] = copiedItems.splice(source.index, 1);
-            copiedItems.splice(destination.index, 0, removed);
+            const copiedTasks = [...column.tasks];
+            const [removed] = copiedTasks.splice(source.index, 1);
+            copiedTasks.splice(destination.index, 0, removed);
             this.setState({
                 columns: {
                     ...columns,
                     [source.droppableId]: {
                         ...column,
-                        items: copiedItems
+                        tasks: copiedTasks
                     }
                 }
             });
 
-            if (copiedItems[source.index] === copiedItems[destination.index]) {
+            if (copiedTasks[source.index] === copiedTasks[destination.index]) {
                 return;
             }
 
             this.updateColumnsOrder(columns)
         }
     };
+
+    filterByAssigneeOnChange(e) {
+        let value = e.target.value;
+        let elements = document.getElementById("assigneeFilter").options;
+        let columnTasks = this.state.columnTasks;
+        let stateColumns = this.state.columns;
+        let updatedColumns = [];
+
+        if (value == "All") {
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].selected = false;
+            }
+
+            document.getElementById("assigneeFilter").value = "All"
+            for (let column in stateColumns) {
+                let temp = stateColumns[column];
+                let tempTasks = columnTasks[temp.id];
+
+                temp.tasks = tempTasks;
+                updatedColumns.push(temp)
+            }
+
+            this.setState({columns: this.state.columns})
+        } else {
+            let ids = [];
+
+            for (let i = 0; i < elements.length; i++) {
+                if (elements[i].selected) {
+                    ids.push(parseInt(elements[i].value))
+                }
+            }
+
+            for (let column in stateColumns) {
+                let temp = stateColumns[column];
+                let tempTasks = columnTasks[temp.id];
+
+                temp.tasks = tempTasks.filter(function (task) {
+                    for (let id in ids) {
+                        if (ids[id] == task.assignee_id) {
+                            return task;
+                        }
+                    }
+                })
+                updatedColumns.push(temp)
+            }
+        }
+
+        this.setState({columns: updatedColumns})
+    }
 
     updateColumnsOrder(columns) {
         let repository = this.state.task_repository;
@@ -211,7 +279,7 @@ function getSorts() {
 
 function getIncludes() {
     return [
-        'workspace',
+        'workspace.users',
         'columns.tasks',
     ];
 }
