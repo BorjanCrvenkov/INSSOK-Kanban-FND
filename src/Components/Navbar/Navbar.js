@@ -20,12 +20,14 @@ import LoginForm from "../LoginForm";
 import Comment from "../Comment/Comment";
 import Comments from "../Comment/Comments";
 import CommentForm from "../Comment/CommentForm";
-
+import Role from "../Role/Role";
+import Roles from "../Role/Roles";
+import RoleForm from "../Role/RoleForm";
 
 const Navigation = () => {
     return (
         <Routes>
-                <Route path="/me" element={<User user={null}/>}/>
+            <Route path="/me" element={<User user={null}/>}/>
             <Route path="/register" element={<UserForm user={null}/>}/>
             <Route path="/login" element={<LoginForm/>}/>
             <Route path="/" element={<Home/>}/>
@@ -49,11 +51,14 @@ const Navigation = () => {
             <Route path="/tasks/add" element={<TaskForm/>}/>
             <Route path="/tasks/edit/:id" element={<TaskForm/>}/>
             <Route path="/tasks/view/:id" element={<Task task={null}/>}/>
-            
             <Route path="/comments" element={<Comments/>}/>
             <Route path="/comments/add" element={<CommentForm/>}/>
             <Route path="/comments/edit/:id" element={<CommentForm/>}/>
             <Route path="/comments/view/:id" element={<Comment comment={null}/>}/>
+            <Route path="/roles" element={<Roles/>}/>
+            <Route path="/roles/add" element={<RoleForm/>}/>
+            <Route path="/roles/edit/:id" element={<RoleForm/>}/>
+            <Route path="/roles/view/:id" element={<Role comment={null}/>}/>
         </Routes>
     );
 };
