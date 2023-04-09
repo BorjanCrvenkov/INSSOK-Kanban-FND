@@ -43,29 +43,33 @@ class Task extends React.Component {
             return <h1>Loading task...</h1>
         }
 
-        const link = isView ? <a href={`/tasks/edit/${task.id}`}>Edit task</a>
-            : <a href={`/tasks/view/${task.id}`}>View task</a>;
+        const link = isView ? <a href={`/tasks/edit/${task.id}`} className="btn btn-primary">Edit task</a>
+            : <a href={`/tasks/view/${task.id}`} className="btn btn-primary">View task</a>;
 
-        const delete_button = isView ? <button onClick={this.delete}>Delete task</button> : '';
+        const delete_button = isView ? <button onClick={this.delete} className="btn btn-danger">Delete task</button> : '';
 
         return (
-            <div>
-                <h3>{task['title']}</h3>
-                <h4>{task['description']}</h4>
-                <h4>{task['priority']}</h4>
-                <h4>{task['due_date']}</h4>
-                <h4>{task['type']}</h4>
-                {column &&
-                <h3>Column name: {column.name}</h3>
-                }
-                {reporter &&
-                <h3>Reporter name: {reporter.name}</h3>
-                }
-                {assignee &&
-                <h3>Assignee name: {assignee.name}</h3>
-                }
-                {link}
-                {delete_button}
+            <div className="card bg-light mb-3">
+                <div className="card-header"><h3>{task['title']}</h3></div>
+                <div className="card-body">
+                    <h4 className="card-text">{task['description']}</h4>
+                    <p className="card-text">Priority: {task['priority']}</p>
+                    <p className="card-text">Due date: {task['due_date']}</p>
+                    <p className="card-text">Type: {task['type']}</p>
+                    {column &&
+                    <h5 className="card-title">Column name: {column.name}</h5>
+                    }
+                    {reporter &&
+                    <h5 className="card-title">Reporter name: {reporter.name}</h5>
+                    }
+                    {assignee &&
+                    <h5 className="card-title">Assignee name: {assignee.name}</h5>
+                    }
+                    <div className="d-flex justify-content-between">
+                        {link}
+                        {delete_button}
+                    </div>
+                </div>
             </div>
         );
     }

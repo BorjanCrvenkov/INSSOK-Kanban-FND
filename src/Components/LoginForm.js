@@ -35,15 +35,23 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-        <div>
+      <div className="container d-flex justify-content-center align-items-center h-100">
+        <div className="card p-4">
+          <h2 className="mb-4">Login Page</h2>
           <form onSubmit={this.onSubmitForm}>
-            <label>Email</label>
-            <input type="email" name="email" value={this.state.email} onChange={this.onInputchange} required/>
-            <label>Password</label>
-            <input type="password" name="password" value={this.state.password} onChange={this.onInputchange} required/>
-            <button type='submit'>Submit</button>
+            <div className="form-group">
+              <label>Email</label>
+              <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.onInputchange} required/>
+            </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.onInputchange} required/>
+            </div>
+            <br></br>
+            <button type='submit' className="btn btn-primary">Submit</button>
           </form>
         </div>
+      </div>
     )
   }
 }

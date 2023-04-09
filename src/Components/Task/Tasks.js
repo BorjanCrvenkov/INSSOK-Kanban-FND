@@ -37,8 +37,9 @@ class Tasks extends React.Component {
             <div>
                 <div>
                     <h1>Tasks</h1>
-                    <a href={'/tasks/add'}>Add task</a>
+                    <a href={'/tasks/add'} className="btn btn-primary">Add task</a>
                 </div>
+                <br></br>
                 {tasks.map(function (task, key) {
                     return <Task task={task}/>
                 })}
