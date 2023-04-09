@@ -37,8 +37,9 @@ class Columns extends React.Component {
             <div>
                 <div>
                     <h1>Columns</h1>
-                    <a href={'/columns/add'}>Add column</a>
+                    <a href="/columns/add" className="btn btn-primary">Add Column</a>
                 </div>
+                <br></br>
                 {columns.map(function (column, key) {
                     return <Column column={column}/>
                 })}
