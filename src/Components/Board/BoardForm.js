@@ -12,6 +12,7 @@ class BoardForm extends React.Component {
             name: '',
             description: '',
             workspace_id: '',
+            task_prefix: '',
             repository: new BoardRepository(),
             workspaces: null,
             workspacesRepository: new WorkspaceRepository()
@@ -32,7 +33,8 @@ class BoardForm extends React.Component {
         const data = {
             'name': this.state.name,
             'description': this.state.description,
-            'workspace_id': this.state.workspace_id
+            'workspace_id': this.state.workspace_id,
+            'task_prefix': this.state.task_prefix,
         };
 
         let id;
@@ -58,7 +60,8 @@ class BoardForm extends React.Component {
 
             this.setState({name: data['name']});
             this.setState({description: data['description']});
-            this.setState({workspace_id: data['workspace_id']})
+            this.setState({workspace_id: data['workspace_id']});
+            this.setState({task_prefix: data['task_prefix']});
             this.setState({isEdit: true})
         }
 
@@ -92,6 +95,8 @@ class BoardForm extends React.Component {
                                 return <option value={workspace.id}>{workspace.name}</option>
                             })}
                         </select>
+                        <label>Task Prefix</label>
+                        <input type="text" name="task_prefix" value={this.state.task_prefix} onChange={this.onInputchange}  className="form-control"/>
 
                         <button className="btn btn-primary mt-3">Submit</button>
                     </form>
