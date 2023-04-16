@@ -142,4 +142,12 @@ export default class Repository {
             window.location.href = 'http://localhost:3000/login'
         }
     }
+
+    async logout() {
+        await instance.post('/auth/logout');
+
+        localStorage.clear();
+
+        return true;
+    }
 }
