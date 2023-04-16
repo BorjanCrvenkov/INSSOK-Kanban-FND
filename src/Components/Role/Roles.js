@@ -57,9 +57,7 @@ function getSorts() {
 }
 
 function getIncludes() {
-    return [
-        'user'
-    ];
+    return null;
 }
 
 export default Roles;

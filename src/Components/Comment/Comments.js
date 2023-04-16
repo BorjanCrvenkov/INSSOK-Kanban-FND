@@ -57,10 +57,7 @@ function getSorts() {
 }
 
 function getIncludes() {
-    return [
-        'reporter',
-        'assignee'
-    ];
+    return null;
 }
 
 export default Comments;
