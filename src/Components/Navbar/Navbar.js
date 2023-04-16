@@ -24,6 +24,7 @@ import Role from "../Role/Role";
 import Roles from "../Role/Roles";
 import RoleForm from "../Role/RoleForm";
 import Logout from "../Logout";
+import {Navigate} from "react-router";
 
 const Navigation = () => {
     return (
@@ -61,6 +62,10 @@ const Navigation = () => {
             <Route path="/roles/add" element={<RoleForm/>}/>
             <Route path="/roles/edit/:id" element={<RoleForm/>}/>
             <Route path="/roles/view/:id" element={<Role comment={null}/>}/>
+            <Route
+                path="*"
+                element={<Navigate to="/workspaces" replace={true}/>}
+            />
         </Routes>
     );
 };
