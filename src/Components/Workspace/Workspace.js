@@ -3,6 +3,7 @@ import WorkspaceRepository from "../Repository/WorkspaceRepository";
 import AddUserToWorkspace from "./AddUserToWorkspace";
 import UserWorkspaceRepository from "../Repository/UserWorkspaceRepository";
 import BoardIndex from "../Board/BoardIndex";
+import EditUserAccessModal from "./EditUserAccessModal";
 
 
 class Workspace extends React.Component {
@@ -69,10 +70,11 @@ class Workspace extends React.Component {
                     <table className="table table-hover">
                         <thead>
                         <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
+                            <th></th>
+                            <th>Name</th>
                             <th>Username</th>
                             <th>Email</th>
+                            <th>Access type</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -81,15 +83,17 @@ class Workspace extends React.Component {
                         {
                         users.map(function (user, key) {
                             return <tr>
-                                <td scope="col">{user.first_name}</td>
-                                <td scope="col">{user.last_name}</td>
+                                <td scope="col"><img src={user.image_link}  alt='' width="30" height="30" className='rounded-1'/></td>
+                                <td scope="col">{user.first_name} {user.last_name}</td>
                                 <td scope="col">{user.username}</td>
                                 <td scope="col">{user.email}</td>
+                                <td scope="col">{user.pivot.access_type}</td>
                                 <td scope="col">
+                                    <EditUserAccessModal workspace={workspace} user={user} accessType={user.pivot.access_type}/>
                                     <button onClick={() => {
                                         deleteUserFromWorkspace(user.id, workspace.id)
                                     }
-                                    } className="btn btn-danger">Delete
+                                    } className="btn btn-danger" style={{'margin-left': '15px'}}>Delete
                                     </button>
                                 </td>
                             </tr>
