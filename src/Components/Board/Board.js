@@ -5,6 +5,7 @@ import TaskRepository from "../Repository/TaskRepository";
 import TaskModal from "../Task/TaskModal";
 import 'bootstrap/dist/js/bootstrap.min.js';
 import ColumnModal from "../Column/ColumnModal";
+import TaskDisplayModal from "../Task/TaskDisplayModal";
 
 class Board extends React.Component {
     constructor(props) {
@@ -19,6 +20,7 @@ class Board extends React.Component {
             columns: null,
             users: [],
             columnTasks: [],
+            task: null,
         };
     }
 
@@ -66,7 +68,8 @@ class Board extends React.Component {
             <div>
                 <div className="mt-2 mb-4">
                     <label>Filter by user</label>
-                    <select className="form-select" id="assigneeFilter" multiple onChange={this.filterByAssigneeOnChange.bind(this)}>
+                    <select className="form-select" id="assigneeFilter" multiple
+                            onChange={this.filterByAssigneeOnChange.bind(this)}>
                         <option value="All">All</option>
                         {users && users.map(function (user, key) {
                             return <option value={user.id}>{user.first_name} {user.last_name}</option>
@@ -99,28 +102,36 @@ class Board extends React.Component {
                                                     >
                                                         {column.tasks.map((item, index) => {
                                                             return (
-                                                                <Draggable
-                                                                    key={String(item.id)}
-                                                                    draggableId={String(item.id)}
-                                                                    index={index}
-                                                                >
-                                                                    {(provided, snapshot) => {
-                                                                        return (
-                                                                            <div ref={provided.innerRef}
-                                                                                 {...provided.draggableProps}
-                                                                                 {...provided.dragHandleProps}>
-                                                                                <div className="card bg-light mb-3"
-                                                                                     style={{'width': '200px'}}>
-                                                                                    <div className="card-body">
-                                                                                        <h5 className="card-title">{item['title']}</h5>
-                                                                                        <p className="card-text">{item['priority']}</p>
-                                                                                        <p className="card-text">{item['label']}</p>
+                                                                <div
+                                                                    onClick={(e) => this.openTaskDisplayModal(item, e)}>
+                                                                    <Draggable
+                                                                        key={String(item.id)}
+                                                                        draggableId={String(item.id)}
+                                                                        index={index}
+                                                                    >
+                                                                        {(provided, snapshot) => {
+                                                                            return (
+                                                                                <div ref={provided.innerRef}
+                                                                                     {...provided.draggableProps}
+                                                                                     {...provided.dragHandleProps} >
+                                                                                    <div className="card bg-light mb-3"
+                                                                                         style={{'width': '200px'}}>
+                                                                                        <div className="card-body">
+                                                                                            <h5 className="card-title">{item['title']}</h5>
+                                                                                            <p className="card-text">{item['priority']}</p>
+                                                                                            <p className="card-text">{item['label']}</p>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        );
-                                                                    }}
-                                                                </Draggable>
+                                                                            );
+                                                                        }}
+                                                                    </Draggable>
+                                                                    <div>
+                                                                        {this.state.task != null && this.state.task.id == item.id &&
+                                                                        <TaskDisplayModal showModal={true} task={this.state.task}/>
+                                                                        }
+                                                                    </div>
+                                                                </div>
                                                             );
                                                         })}
                                                         {provided.placeholder}
@@ -144,6 +155,11 @@ class Board extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    openTaskDisplayModal(task, e) {
+        e.preventDefault();
+        this.setState({task: task})
     }
 
     async onDragEnd(result, columns) {
@@ -281,7 +297,9 @@ function getSorts() {
 function getIncludes() {
     return [
         'workspace.users',
-        'columns.tasks',
+        'columns.tasks.assignee',
+        'columns.tasks.reporter',
+        'columns.tasks.comments.user',
     ];
 }
 
