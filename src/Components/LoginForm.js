@@ -27,9 +27,11 @@ class LoginForm extends React.Component {
       'password': this.state.password,
     };
 
-    await this.state.repository.login(data);
+    let success = await this.state.repository.login(data);
 
-    window.location.href = 'http://localhost:3000/workspaces'
+    if(success){
+      // window.location.href = 'http://localhost:3000/workspaces'
+    }
   }
 
 
