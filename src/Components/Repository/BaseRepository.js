@@ -14,7 +14,9 @@ export default class Repository {
 
         path += requestParams;
 
-        const response = await instance.get(path);
+        const response = await instance.get(path).catch((error) => {
+            this.handleErrorResponse(error)
+        });
 
         return response.data.data;
     }
@@ -24,11 +26,13 @@ export default class Repository {
 
         let path = this.modelName + '/' + id;
 
-        let requestParams = this.getRequestParams(filters, sorts, includes)
+        let requestParams = this.getRequestParams(filters, sorts, includes);
 
         path += requestParams;
 
-        const response = await instance.get(path);
+        const response = await instance.get(path).catch((error) => {
+            this.handleErrorResponse(error)
+        });
 
         return response.data.data;
     };
@@ -93,7 +97,9 @@ export default class Repository {
     async update(id, data) {
         this.checkIfTokenExistsAndIsNotExpired();
 
-        const response = await instance.put(this.modelName + '/' + id, data);
+        const response = await instance.put(this.modelName + '/' + id, data).catch((error) => {
+            this.handleErrorResponse(error)
+        });
 
         return response.data.data;
     };
@@ -101,15 +107,28 @@ export default class Repository {
     async deleteModel(id) {
         this.checkIfTokenExistsAndIsNotExpired();
 
-        await instance.delete(this.modelName + '/' + id);
+        await instance.delete(this.modelName + '/' + id).catch((error) => {
+            this.handleErrorResponse(error)
+        });
     };
 
     async add(data) {
-        if (window.location.href.split("/").pop() !== 'register') {
+        let route = this.modelName;
+        let is_register = window.location.href.split("/").pop() !== 'register';
+
+        if (is_register) {
+            route = 'auth/register';
+        }else {
             this.checkIfTokenExistsAndIsNotExpired();
         }
 
-        const response = await instance.post(this.modelName, data);
+        const response = await instance.post(route, data).catch((error) => {
+            this.handleErrorResponse(error)
+        });
+
+        if(is_register){
+            return window.location.href = 'http://localhost:3000/login';
+        }
 
         return response.data.data['id'];
     }
@@ -125,9 +144,11 @@ export default class Repository {
 
                 localStorage.setItem("token", token);
                 localStorage.setItem("expires_at", expires_at);
-            })
-
-        window.location.href = 'http://localhost:3000/workspaces'
+            }).catch((error) => {
+                this.handleErrorResponse(error)
+                return false;
+            });
+        return true;
     }
 
     checkIfTokenExistsAndIsNotExpired() {
@@ -144,10 +165,50 @@ export default class Repository {
     }
 
     async logout() {
-        await instance.post('/auth/logout');
+        await instance.post('/auth/logout').catch((error) => {
+            this.handleErrorResponse(error)
+        });
 
         localStorage.clear();
 
         return true;
+    }
+
+    async handleErrorResponse(error){
+        let single_message =  error.response.data.meta != null
+        let message = single_message ? error.response.data.meta.message : error.response.data.errors;
+
+        this.showNotification(message, single_message);
+    }
+
+    async showNotification(errors, single_message) {
+        const container = document.getElementById('notification-container');
+
+        if(single_message){
+            const notification = document.createElement('div');
+            notification.innerHTML = `<div class="alert alert-danger" role="alert">${errors}</div>`;
+
+            container.appendChild(notification);
+
+            setTimeout(() => {
+                container.removeChild(notification);
+            }, 6000);
+
+            notification.classList.add('show');
+            return;
+        }
+
+        for (let i in errors) {
+            const notification = document.createElement('div');
+            notification.innerHTML = `<div class="alert alert-danger" role="alert">${errors[i]}</div>`;
+
+            container.appendChild(notification);
+
+            setTimeout(() => {
+                container.removeChild(notification);
+            }, 6000);
+
+            notification.classList.add('show');
+        }
     }
 }
