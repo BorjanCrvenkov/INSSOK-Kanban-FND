@@ -114,7 +114,7 @@ export default class Repository {
 
     async add(data) {
         let route = this.modelName;
-        let is_register = window.location.href.split("/").pop() !== 'register';
+        let is_register = window.location.href.split("/").pop() == 'register';
 
         if (is_register) {
             route = 'auth/register';
