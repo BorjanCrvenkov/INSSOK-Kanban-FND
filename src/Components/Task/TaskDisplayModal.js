@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Comments from "../Comment/Comments";
 
 class TaskDisplayModal extends React.Component {
     constructor(props) {
@@ -26,31 +27,21 @@ class TaskDisplayModal extends React.Component {
             <Modal show={showModal} onHide={this.toggleModal} size="xl">
               <Modal.Header closeButton>
                 <Modal.Title className="font-weight-bold text-left">
-                  <h2 className="font-weight-bold">{task.title}</h2>
+                  <h2 className="font-weight-bold">{task.label}: {task.title}</h2>
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <div className="row">
                   <div className="col-md-8">
-                    <h4 className="font-weight-bold">Description</h4>
-                    <p className="lead">{task.description}</p>
-                    <h5 className="mt-4 mb-3">Comments</h5>
-                    <div className="border rounded p-3">
-                      {task.comments.map(function (comment, key) {
-                        return (
-                          <div className="border-bottom pb-3 mb-3" key={key}>
-                            <p>{comment.body}</p>
-                            <p className="text-muted">
-                              Posted by: {comment.user.first_name} {comment.user.last_name}
-                              <br />
-                              Posted at: {comment.created_at}
-                            </p>
-                          </div>
-                        );
-                      })}
+                    <div className='border rounded p-3'>
+                        <h4 className="font-weight-bold">Description</h4>
+                        <p className="lead">{task.description}</p>
+                    </div>
+                    <div className="border rounded p-3 mt-2">
+                        <Comments task={task}/>
                     </div>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-4 border rounded p-3">
                     <div className="mb-3">
                       <label className="font-weight-bold">Priority:</label>
                       <p>{task.priority}</p>
@@ -62,10 +53,6 @@ class TaskDisplayModal extends React.Component {
                     <div className="mb-3">
                       <label className="font-weight-bold">Type:</label>
                       <p>{task.type}</p>
-                    </div>
-                    <div className="mb-3">
-                      <label className="font-weight-bold">Label:</label>
-                      <p>{task.label}</p>
                     </div>
                     <div className="mb-3">
                       <label className="font-weight-bold">Assignee:</label>

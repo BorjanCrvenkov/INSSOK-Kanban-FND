@@ -299,7 +299,6 @@ function getIncludes() {
         'workspace.users',
         'columns.tasks.assignee',
         'columns.tasks.reporter',
-        'columns.tasks.comments.user',
     ];
 }
 
