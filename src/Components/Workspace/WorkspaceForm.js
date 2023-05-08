@@ -55,7 +55,20 @@ class WorkspaceForm extends React.Component {
         }
         this.setState({isLoading: false})
     }
-
+    onSubmitForm = (event) => {
+        event.preventDefault();
+      
+        if (this.state.name.trim() === '') {
+          alert('Name field cannot be empty');
+          return;
+        }
+      
+        if (this.state.description.trim() === '') {
+          alert('Description field cannot be empty');
+          return;
+        }
+      };
+      
     render() {
         const {isLoading, isEdit} = this.state;
 

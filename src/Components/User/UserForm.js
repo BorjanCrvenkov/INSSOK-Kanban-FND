@@ -79,6 +79,34 @@ class UserForm extends React.Component {
         this.setState({image: file})
     }
 
+    onSubmitForm = (event) => {
+        event.preventDefault();
+
+        if (this.state.first_name.trim() === '') {
+            alert('First name field cannot be empty');
+            return;
+        }
+    
+        if (this.state.last_name.trim() === '') {
+            alert('Last name field cannot be empty');
+            return;
+        }
+        
+        if (this.state.username.trim() === '') {
+            alert('Username field cannot be empty');
+            return;
+        }
+
+        if (this.state.password.trim() === '') {
+            alert('Password field cannot be empty');
+            return;
+        }
+
+        if (this.state.email.trim() === '') {
+            alert('Email field cannot be empty');
+            return;
+        }
+    };
     render() {
         const {isLoading, isEdit} = this.state;
 

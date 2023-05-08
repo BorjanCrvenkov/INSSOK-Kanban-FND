@@ -64,35 +64,63 @@ class ColumnForm extends React.Component {
 
         this.setState({isLoading: false})
     }
-
-    render() {
-        const {isLoading, isEdit} = this.state;
-
-        if (isLoading && !isEdit) {
-            return <h1>Loading board...</h1>
-        }else if (isLoading && !isEdit) {
-            return <h1>Loading form...</h1>
+    onSubmitForm = (event) => {
+        event.preventDefault();
+    
+        const { name, order, board_id } = this.state;
+    
+        if (!name.trim()) {
+          alert('Name field cannot be empty');
+          return;
         }
-
+    
+        if (isNaN(order) || order < 0) {
+          alert('Order field must be a positive number');
+          return;
+        }
+    
+        if (!board_id) {
+          alert('Please select a board');
+          return;
+        }
+    
+    };
+    render() {
+        const { isLoading, isEdit } = this.state;
+      
+        if (isLoading && !isEdit) {
+          return <h1>Loading column...</h1>;
+        } else if (isLoading && !isEdit) {
+          return <h1>Loading form...</h1>;
+        }
+      
         let boards = this.state.boards;
-
+      
         return (
-            <div>
-                <h1>Edit board</h1>
-                <label>Name</label>
-                <input type="text" name="name" value={this.state.name} onChange={this.onInputchange}/>
-                <label>Order</label>
-                <input type="number" name="order" value={this.state.order} onChange={this.onInputchange}/>
-                <label>Board</label>
-                <select name="board_id" onChange={this.onInputchange} defaultValue={this.state.board_id}>
-                    {boards.map(function (board, key) {
-                        return <option value={board.id}>{board.name}</option>
-                    })}
+          <div className="container">
+            <h1 className="mb-4">Add column</h1>
+            <form onSubmit={this.onSubmitForm}>
+              <div className="mb-3">
+                <label htmlFor="name" className="form-label">Name</label>
+                <input type="text" name="name" value={this.state.name} onChange={this.onInputchange} className="form-control" id="name" required />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="order" className="form-label">Order</label>
+                <input type="number" name="order" value={this.state.order} onChange={this.onInputchange} className="form-control" id="order" required />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="board_id" className="form-label">Board</label>
+                <select name="board_id" onChange={this.onInputchange} defaultValue={this.state.board_id} className="form-select" id="board_id" required>
+                  {boards.map(function (board, key) {
+                    return <option value={board.id} key={key}>{board.name}</option>
+                  })}
                 </select>
-                <button onClick={this.onSubmitForm}>Submit</button>
-            </div>
+              </div>
+              <button type="submit" className="btn btn-primary">Submit</button>
+            </form>
+          </div>
         );
-    }
+      }
 }
 
 export default ColumnForm;

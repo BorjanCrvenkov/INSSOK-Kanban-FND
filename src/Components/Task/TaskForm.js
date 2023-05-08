@@ -81,97 +81,128 @@ class TaskForm extends React.Component {
     }
 
     render() {
-        const { isLoading, isEdit, workspace_id } = this.state;
-      
-        if (isLoading && !isEdit) {
-          return <h1>Loading task...</h1>;
-        }
-      
-        let columns = this.state.columns;
-      
-        return (
-          <div className="container mt-5">
-            <h1 className="mb-4">{isEdit ? 'Edit Task' : 'Add Task'}</h1>
-            <form onSubmit={this.onSubmitForm}>
-              <div className="mb-3">
-                <label htmlFor="title" className="form-label">Title</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="title"
-                  name="title"
-                  value={this.state.title}
-                  onChange={this.onInputchange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="description" className="form-label">Description</label>
-                <textarea
-                  className="form-control"
-                  id="description"
-                  name="description"
-                  value={this.state.description}
-                  onChange={this.onInputchange}
-                ></textarea>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="priority" className="form-label">Priority</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="priority"
-                  name="priority"
-                  value={this.state.priority}
-                  onChange={this.onInputchange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="due_date" className="form-label">Due Date</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="due_date"
-                  name="due_date"
-                  value={this.state.due_date}
-                  onChange={this.onInputchange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="type" className="form-label">Type</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="type"
-                  name="type"
-                  value={this.state.type}
-                  onChange={this.onInputchange}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="column_id" className="form-label">Column</label>
-                <select
-                  className="form-select"
-                  id="column_id"
-                  name="column_id"
-                  onChange={this.onInputchange}
-                  defaultValue={this.state.column_id}
-                >
-                  {columns.map(function (column, key) {
-                    return (
-                      <option key={key} value={column.id}>
-                        {column.name}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-              <button type="submit" className="btn btn-primary">
-                Submit
-              </button>
-            </form>
-          </div>
-        );
+      const { isLoading, isEdit, workspace_id } = this.state;
+    
+      if (isLoading && !isEdit) {
+        return <h1>Loading task...</h1>;
       }
+    
+      let columns = this.state.columns;
+    
+      const handleSubmit = (e) => {
+        e.preventDefault();
+    
+        const { title, description, priority, due_date, type, column_id } = this.state;
+    
+        if (!title || !description || !priority || !due_date || !type || !column_id) {
+          alert("Please fill out all fields.");
+          return;
+        }
+    
+        if (title.length > 50) {
+          alert("Title cannot exceed 50 characters.");
+          return;
+        }
+    
+        // Add additional validation rules here
+    
+        this.onSubmitForm();
+      };
+    
+      return (
+        <div className="container mt-5">
+          <h1 className="mb-4">{isEdit ? 'Edit Task' : 'Add Task'}</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="title" className="form-label">Title</label>
+              <input
+                type="text"
+                className="form-control"
+                id="title"
+                name="title"
+                value={this.state.title}
+                onChange={this.onInputchange}
+                maxLength={50}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">Description</label>
+              <textarea
+                className="form-control"
+                id="description"
+                name="description"
+                value={this.state.description}
+                onChange={this.onInputchange}
+                required
+              ></textarea>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="priority" className="form-label">Priority</label>
+              <input
+                type="number"
+                className="form-control"
+                id="priority"
+                name="priority"
+                value={this.state.priority}
+                onChange={this.onInputchange}
+                min={1}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="due_date" className="form-label">Due Date</label>
+              <input
+                type="date"
+                className="form-control"
+                id="due_date"
+                name="due_date"
+                value={this.state.due_date}
+                onChange={this.onInputchange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="type" className="form-label">Type</label>
+              <input
+                type="text"
+                className="form-control"
+                id="type"
+                name="type"
+                value={this.state.type}
+                onChange={this.onInputchange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="column_id" className="form-label">Column</label>
+              <select
+                className="form-select"
+                id="column_id"
+                name="column_id"
+                onChange={this.onInputchange}
+                defaultValue={this.state.column_id}
+                required
+              >
+                <option value="" disabled>Select a column</option>
+                {columns.map(function (column, key) {
+                  return (
+                    <option key={key} value={column.id}>
+                      {column.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </form>
+        </div>
+      );
+    }
+    
+    
       
 }
 
