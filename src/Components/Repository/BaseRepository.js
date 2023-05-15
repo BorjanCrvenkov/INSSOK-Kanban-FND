@@ -142,8 +142,12 @@ export default class Repository {
 
                 let expires_at = auth.expires_at;
 
+                let user = response.data.data;
+
                 localStorage.setItem("token", token);
                 localStorage.setItem("expires_at", expires_at);
+                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('role', user.role.name);
             }).catch((error) => {
                 this.handleErrorResponse(error)
                 return false;

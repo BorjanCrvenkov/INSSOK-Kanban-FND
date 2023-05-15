@@ -4,6 +4,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Comments from "../Comment/Comments";
+import FollowsRelation from "../Workspace/FollowsRelation";
 
 class TaskDisplayModal extends React.Component {
     constructor(props) {
@@ -42,6 +43,9 @@ class TaskDisplayModal extends React.Component {
                                 </div>
                             </div>
                             <div className="col-md-4 border rounded p-3">
+                                <div className="mb-3">
+                                    <FollowsRelation task={task} style={{'margin-left': '50px'}} />
+                                </div>
                                 <div className="mb-3">
                                     <label className="font-weight-bold">Priority:</label>
                                     <p>{task.priority}</p>
