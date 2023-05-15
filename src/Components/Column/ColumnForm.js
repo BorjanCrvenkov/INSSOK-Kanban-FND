@@ -29,10 +29,27 @@ class ColumnForm extends React.Component {
 
     async onSubmitForm(e) {
         e.preventDefault();
+        const { name, order, board_id } = this.state;
+
+        if (!name.trim()) {
+            alert('Name field cannot be empty');
+            return;
+        }
+
+        if (isNaN(order) || order < 0) {
+            alert('Order field must be a positive number');
+            return;
+        }
+
+        if (!board_id) {
+            alert('Please select a board');
+            return;
+        }
+
         const data = {
-            'name': this.state.name,
-            'order': this.state.order,
-            'board_id': this.state.board_id
+            'name': name,
+            'order': order,
+            'board_id': board_id,
         };
 
         let id;
@@ -64,27 +81,7 @@ class ColumnForm extends React.Component {
 
         this.setState({isLoading: false})
     }
-    onSubmitForm = (event) => {
-        event.preventDefault();
-    
-        const { name, order, board_id } = this.state;
-    
-        if (!name.trim()) {
-          alert('Name field cannot be empty');
-          return;
-        }
-    
-        if (isNaN(order) || order < 0) {
-          alert('Order field must be a positive number');
-          return;
-        }
-    
-        if (!board_id) {
-          alert('Please select a board');
-          return;
-        }
-    
-    };
+
     render() {
         const { isLoading, isEdit } = this.state;
       

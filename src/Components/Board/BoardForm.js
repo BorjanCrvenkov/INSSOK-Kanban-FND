@@ -30,11 +30,34 @@ class BoardForm extends React.Component {
 
     async onSubmitForm(e) {
         e.preventDefault();
+
+        const { name, description, workspace_id, task_prefix } = this.state;
+
+        if (!name.trim()) {
+            alert('Name field cannot be empty');
+            return;
+        }
+
+        if (!description.trim()) {
+            alert('Description field cannot be empty');
+            return;
+        }
+
+        if (!workspace_id) {
+            alert('Please select a workspace');
+            return;
+        }
+
+        if (!task_prefix.trim()) {
+            alert('Task Prefix field cannot be empty');
+            return;
+        }
+
         const data = {
-            'name': this.state.name,
-            'description': this.state.description,
-            'workspace_id': this.state.workspace_id,
-            'task_prefix': this.state.task_prefix,
+            'name': name,
+            'description': description,
+            'workspace_id': workspace_id,
+            'task_prefix': task_prefix,
         };
 
         let id;
@@ -67,31 +90,6 @@ class BoardForm extends React.Component {
 
         this.setState({isLoading: false})
     }
-    onSubmitForm = (event) => {
-        event.preventDefault();
-    
-        const { name, description, workspace_id, task_prefix } = this.state;
-    
-        if (!name.trim()) {
-          alert('Name field cannot be empty');
-          return;
-        }
-    
-        if (!description.trim()) {
-          alert('Description field cannot be empty');
-          return;
-        }
-    
-        if (!workspace_id) {
-          alert('Please select a workspace');
-          return;
-        }
-    
-        if (!task_prefix.trim()) {
-          alert('Task Prefix field cannot be empty');
-          return;
-        }
-    };
 
     render() {
         const {isLoading, isEdit, workspace_id} = this.state;
