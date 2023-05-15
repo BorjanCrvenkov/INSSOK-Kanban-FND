@@ -27,6 +27,11 @@ class Comments extends React.Component {
 
         let data = await this.state.repository.index(filters, sorts, includes);
 
+        if(!data){
+            this.setState({isLoading: false})
+            return ;
+        }
+
         let data_clone = data.map((x) => x);
 
         let ascending_sorted_comments = this.bubbleSort(data, true);
@@ -93,10 +98,6 @@ class Comments extends React.Component {
             return <h1>Loading comments...</h1>
         }
 
-        if (!comments.length) {
-            return <h1>No comments.</h1>
-        }
-
         return (
             <div>
                 <div>
@@ -120,7 +121,7 @@ class Comments extends React.Component {
                 <div className="border-bottom pb-3 mb-3 mt-3">
                     <CommentFormForTaskModal task={this.state.task} reload={this.reload}/>
                 </div>
-                {comments.map(function (comment, key) {
+                {comments && comments.map(function (comment, key) {
                     return (
                         <div className="border-bottom pb-3 mb-3" key={key}>
                             <p>{comment.body}</p>
