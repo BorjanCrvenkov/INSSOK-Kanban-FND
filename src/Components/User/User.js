@@ -19,9 +19,7 @@ class User extends React.Component {
             let user = await this.state.repository.getAuthUserInfo();
 
             this.setState({user: user});
-        }
-
-        if (this.state.user == null) {
+        }else if(this.state.user == null) {
             let data = await this.fetchUserAndReturnData();
 
             this.setState({user: data});

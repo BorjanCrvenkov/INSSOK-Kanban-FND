@@ -21,7 +21,6 @@ export default class UserRepository extends Repository{
         let user = await this.index(filters, null, null);
 
         if(user == null){
-            console.log("User not found!")
             return ;
         }
 
