@@ -26,10 +26,11 @@ class ColumnModal extends React.Component {
 
         return (
             <>
+                {localStorage.getItem('is_user') != 'true'
+                &&
                 <Button variant="primary" onClick={this.toggleModal}>
                     Add new column
-                </Button>
-
+                </Button>}
                 <Modal show={showModal} onHide={this.toggleModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Add new column</Modal.Title>

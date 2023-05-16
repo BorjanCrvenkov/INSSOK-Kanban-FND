@@ -55,8 +55,6 @@ class FollowsRelation extends React.Component {
     async unfollow() {
         document.getElementById('loadingAction').removeAttribute('hidden')
 
-        console.log(this.state.relation.id);
-
         await this.state.repository.deleteModel(this.state.relation.id);
 
         this.setState({reload: true})

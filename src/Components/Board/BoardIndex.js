@@ -33,8 +33,13 @@ class BoardIndex extends React.Component {
                     <h5 className="card-title">{board['name']}</h5>
                     <p className="card-text">{board['description']}</p>
                     <a href={`/boards/view/${board.id}`} className="btn btn-primary mt-auto">View board</a>
-                    <a href={`/boards/edit/${board.id}`} className='btn btn-secondary mt-2'>Edit board</a>
-                    <button onClick={this.delete} className='btn btn-danger mt-2'>Delete board</button>
+                    {localStorage.getItem('is_user') != 'true'
+                    && <a href={`/boards/edit/${board.id}`} className='btn btn-secondary mt-2'>Edit board</a>
+                    }
+                    {localStorage.getItem('is_admin') == 'true'
+                    && <button onClick={this.delete}
+                               className='btn btn-danger mt-2'>Delete board
+                    </button>}
                 </div>
             </div>
         );

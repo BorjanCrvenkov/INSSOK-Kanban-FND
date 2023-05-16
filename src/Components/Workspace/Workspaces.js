@@ -37,12 +37,14 @@ class Workspaces extends React.Component {
             <div>
                 <div>
                     <h1>Workspaces</h1>
-                    <a href={'/workspaces/add'} className='btn btn-primary mt-3'>Add workspace</a>
+                    {localStorage.getItem('is_user') != 'true'
+                    && <a href={'/workspaces/add'} className='btn btn-primary mt-3'>Add workspace</a>
+                    }
                 </div>
                 <div className="row mt-3">
-                {workspaces.map(function (workspace, key) {
-                    return <WorkspaceIndex workspace={workspace}/>
-                })}
+                    {workspaces.map(function (workspace, key) {
+                        return <WorkspaceIndex workspace={workspace}/>
+                    })}
                 </div>
             </div>
         )

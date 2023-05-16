@@ -41,18 +41,28 @@ class Workspace extends React.Component {
                 <h3>{workspace['name']}</h3>
                 <h4>{workspace['description']}</h4>
                 <div className="btn-group mt-3" role="group">
-                    <button className="btn btn-primary" onClick={() => {
+                    {localStorage.getItem('is_user') != 'true'
+                    && <button className="btn btn-primary" onClick={() => {
                         this.setState({displayAddUser: !this.state.displayAddUser})
                     }}>Add user to workspace</button>
-                    <a href={`/workspaces/edit/${workspace.id}`} className="btn btn-success" style={{'margin-left': '10px'}}>Edit workspace</a>
-                    <button onClick={this.delete} className="btn btn-danger" style={{'margin-left': '10px'}}>Delete workspace</button>
+                    }
+                    {localStorage.getItem('is_user') != 'true'
+                    && <a href={`/workspaces/edit/${workspace.id}`}
+                          className="btn btn-success" style={{'margin-left': '10px'}}>Edit workspace</a>
+                    }
+                    {localStorage.getItem('is_admin') == 'true'
+                    && <button onClick={this.delete} className="btn btn-danger"
+                             style={{'margin-left': '10px'}}>Delete workspace
+                    </button>
+                    }
                 </div>
                 <div className="mt-3">
                     {displayAddUser &&
                     <AddUserToWorkspace workspace_id={workspace.id}/>
                     }
                 </div>
-                <div className="mt-3"><div><h4>
+                <div className="mt-3">
+                    <div><h4>
                         {workspace_boards && workspace_boards.length > 0 ? "All workspace boards:" : "This workspace doesn't have boards"}
                     </h4>
                         <a href={'/boards/add'} className='btn btn-primary'>Add board</a>
@@ -81,23 +91,27 @@ class Workspace extends React.Component {
                         <tbody>
 
                         {
-                        users.map(function (user, key) {
-                            return <tr>
-                                <td scope="col"><img src={user.image_link}  alt='' width="30" height="30" className='rounded-1'/></td>
-                                <td scope="col">{user.first_name} {user.last_name}</td>
-                                <td scope="col">{user.username}</td>
-                                <td scope="col">{user.email}</td>
-                                <td scope="col">{user.pivot.access_type}</td>
-                                <td scope="col">
-                                    <EditUserAccessModal workspace={workspace} user={user} accessType={user.pivot.access_type}/>
-                                    <button onClick={() => {
-                                        deleteUserFromWorkspace(user.id, workspace.id)
-                                    }
-                                    } className="btn btn-danger" style={{'margin-left': '15px'}}>Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        })
+                            users.map(function (user, key) {
+                                return <tr>
+                                    <td scope="col"><img src={user.image_link} alt='' width="30" height="30"
+                                                         className='rounded-1'/></td>
+                                    <td scope="col">{user.first_name} {user.last_name}</td>
+                                    <td scope="col">{user.username}</td>
+                                    <td scope="col">{user.email}</td>
+                                    <td scope="col">{user.pivot.access_type}</td>
+                                    <td scope="col">
+                                        <EditUserAccessModal workspace={workspace} user={user}
+                                                             accessType={user.pivot.access_type}/>
+                                        {localStorage.getItem('is_admin') == 'true'
+                                        && <button onClick={() => {
+                                            deleteUserFromWorkspace(user.id, workspace.id)
+                                        }
+                                        } className="btn btn-danger" style={{'margin-left': '15px'}}>Delete
+                                        </button>
+                                        }
+                                    </td>
+                                </tr>
+                            })
                         }
                         </tbody>
 
