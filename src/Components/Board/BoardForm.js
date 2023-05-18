@@ -1,6 +1,7 @@
 import React from 'react';
 import BoardRepository from "../Repository/BoardRepository";
 import WorkspaceRepository from "../Repository/WorkspaceRepository";
+import {SpinningCircles} from "react-loading-icons";
 
 class BoardForm extends React.Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class BoardForm extends React.Component {
     async onSubmitForm(e) {
         e.preventDefault();
 
-        const { name, description, workspace_id, task_prefix } = this.state;
+        const {name, description, workspace_id, task_prefix} = this.state;
 
         if (!name.trim()) {
             alert('Name field cannot be empty');
@@ -93,16 +94,22 @@ class BoardForm extends React.Component {
 
     render() {
         const {isLoading, isEdit, workspace_id} = this.state;
-    
+
         if (isLoading && isEdit) {
-            return <h1>Loading board...</h1>
-        }else if (isLoading && !isEdit) {
-            return <h1>Loading form...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading board...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
+        } else if (isLoading && !isEdit) {
+            return <div>
+                <h1 className='d-inline'>Loading form...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
-    
+
         let workspaces = this.state.workspaces;
         let heading = isEdit ? <h1 className="mb-4">Edit Board</h1> : <h1 className="mb-4">Add Board</h1>;
-    
+
         return (
             <div className="container">
                 <div className="row justify-content-center">
@@ -111,15 +118,19 @@ class BoardForm extends React.Component {
                         <form onSubmit={this.onSubmitForm}>
                             <div className="form-group">
                                 <label htmlFor="name">Name</label>
-                                <input type="text" name="name" value={this.state.name} onChange={this.onInputchange}  className="form-control" id="name"/>
+                                <input type="text" name="name" value={this.state.name} onChange={this.onInputchange}
+                                       className="form-control" id="name"/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="description">Description</label>
-                                <input type="text" name="description" value={this.state.description} onChange={this.onInputchange}  className="form-control" id="description"/>
+                                <input type="text" name="description" value={this.state.description}
+                                       onChange={this.onInputchange} className="form-control" id="description"/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="workspace_id">Workspace</label>
-                                <select name="workspace_id" onChange={this.onInputchange} defaultValue={workspace_id} className="form-select" id="workspace_id">
+                                <select name="workspace_id" onChange={this.onInputchange} defaultValue={workspace_id}
+                                        className="form-select" id="workspace_id">
+                                    <option></option>
                                     {workspaces.map(function (workspace, key) {
                                         return <option value={workspace.id}>{workspace.name}</option>
                                     })}
@@ -127,9 +138,10 @@ class BoardForm extends React.Component {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="task_prefix">Task Prefix</label>
-                                <input type="text" name="task_prefix" value={this.state.task_prefix} onChange={this.onInputchange}  className="form-control" id="task_prefix"/>
+                                <input type="text" name="task_prefix" value={this.state.task_prefix}
+                                       onChange={this.onInputchange} className="form-control" id="task_prefix"/>
                             </div>
-    
+
                             <button className="btn btn-primary mt-3">Submit</button>
                         </form>
                     </div>
@@ -137,7 +149,7 @@ class BoardForm extends React.Component {
             </div>
         );
     }
-    
+
 }
 
 export default BoardForm;

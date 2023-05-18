@@ -1,6 +1,7 @@
 import React from 'react';
 import TaskRepository from "../Repository/TaskRepository";
 import UserRepository from "../Repository/UserRepository";
+import {SpinningCircles} from "react-loading-icons";
 
 class TaskModalForm extends React.Component {
     constructor(props) {
@@ -66,7 +67,10 @@ class TaskModalForm extends React.Component {
         const {users, isLoading} = this.state;
 
         if (isLoading) {
-            return <h1>Loading form...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading form...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         return (

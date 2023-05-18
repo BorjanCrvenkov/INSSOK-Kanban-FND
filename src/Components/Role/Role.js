@@ -1,5 +1,6 @@
 import React from 'react';
 import RoleRepository from "../Repository/RoleRepository";
+import {SpinningCircles} from "react-loading-icons";
 
 class Role extends React.Component {
     constructor(props) {
@@ -34,7 +35,10 @@ class Role extends React.Component {
         const {isLoading, role, isView} = this.state;
 
         if (isLoading) {
-            return <h1>Loading role...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading role...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         const link = isView ? <a href={`/roles/edit/${role.id}`}>Edit role</a>

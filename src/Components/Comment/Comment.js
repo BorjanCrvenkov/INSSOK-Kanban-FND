@@ -1,5 +1,6 @@
 import React from 'react';
 import CommentRepository from "../Repository/CommentRepository";
+import {SpinningCircles} from "react-loading-icons";
 
 class Comment extends React.Component {
     constructor(props) {
@@ -34,7 +35,10 @@ class Comment extends React.Component {
         const {isLoading, comment, isView} = this.state;
 
         if (isLoading) {
-            return <h1>Loading comment...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading comment...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         const link = isView ? <a href={`/comments/edit/${comment.id}`}>Edit comment</a>

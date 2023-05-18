@@ -126,15 +126,20 @@ export default class Repository {
             this.handleErrorResponse(error)
         });
 
+        if(!response){
+            return ;
+        }
+
         if(is_register){
-            return window.location.href = 'http://localhost:3000/login';
+            window.location.href = 'http://localhost:3000/login';
+            return;
         }
 
         return response.data.data['id'];
     }
 
     async login(data) {
-        await instance.post('/auth/login', data)
+        let response = await instance.post('/auth/login', data)
             .then(response => {
                 let auth = response.data.auth;
 
@@ -153,11 +158,19 @@ export default class Repository {
 
                 user = JSON.parse(user);
                 localStorage.setItem('role', user.role.name);
+
+                return response;
             }).catch((error) => {
                 this.handleErrorResponse(error)
-                return false;
             });
-        return true;
+
+        console.log(response);
+
+        if(!response){
+            return ;
+        }
+
+        window.location.href = 'http://localhost:3000/workspaces'
     }
 
     checkIfTokenExistsAndIsNotExpired() {
@@ -201,7 +214,7 @@ export default class Repository {
 
             setTimeout(() => {
                 container.removeChild(notification);
-            }, 6000);
+            }, 3000);
 
             notification.classList.add('show');
             return;

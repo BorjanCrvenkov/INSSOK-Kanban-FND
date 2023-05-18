@@ -6,6 +6,7 @@ import TaskModal from "../Task/TaskModal";
 import 'bootstrap/dist/js/bootstrap.min.js';
 import ColumnModal from "../Column/ColumnModal";
 import TaskDisplayModal from "../Task/TaskDisplayModal";
+import {SpinningCircles} from "react-loading-icons";
 
 class Board extends React.Component {
     constructor(props) {
@@ -61,7 +62,10 @@ class Board extends React.Component {
         let stateColumns = this.state.columns;
 
         if (isLoading) {
-            return <h1>Loading board...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading board...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         return (

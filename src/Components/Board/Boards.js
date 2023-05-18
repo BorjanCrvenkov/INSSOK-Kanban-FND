@@ -2,6 +2,7 @@ import React from 'react';
 import Board from "./Board";
 import BoardRepository from "../Repository/BoardRepository"
 import BoardIndex from "./BoardIndex";
+import {SpinningCircles} from "react-loading-icons";
 
 class Boards extends React.Component {
     constructor(props) {
@@ -23,7 +24,10 @@ class Boards extends React.Component {
         const {isLoading, boards} = this.state;
 
         if (isLoading) {
-            return <h1>Loading boards...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading boards...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         if (!boards.length) {

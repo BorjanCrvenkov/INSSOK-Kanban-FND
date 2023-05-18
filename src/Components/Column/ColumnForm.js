@@ -1,6 +1,7 @@
 import React from 'react';
 import BoardRepository from "../Repository/BoardRepository";
 import ColumnRepository from "../Repository/ColumnRepository";
+import {SpinningCircles} from "react-loading-icons";
 
 class ColumnForm extends React.Component {
     constructor(props) {
@@ -86,9 +87,15 @@ class ColumnForm extends React.Component {
         const { isLoading, isEdit } = this.state;
       
         if (isLoading && !isEdit) {
-          return <h1>Loading column...</h1>;
+          return <div>
+              <h1 className='d-inline'>Loading column...</h1>
+              <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+          </div>
         } else if (isLoading && !isEdit) {
-          return <h1>Loading form...</h1>;
+          return <div>
+              <h1 className='d-inline'>Loading column...</h1>
+              <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+          </div>
         }
       
         let boards = this.state.boards;

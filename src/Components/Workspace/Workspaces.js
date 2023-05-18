@@ -1,6 +1,7 @@
 import React from 'react';
 import WorkspaceRepository from "../Repository/WorkspaceRepository"
 import WorkspaceIndex from "./WorkspaceIndex";
+import {SpinningCircles} from "react-loading-icons";
 
 class Workspaces extends React.Component {
     constructor(props) {
@@ -26,7 +27,10 @@ class Workspaces extends React.Component {
         const {isLoading, workspaces} = this.state;
 
         if (isLoading) {
-            return <h1>Loading workspaces...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading workspaces...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         if (!workspaces.length) {

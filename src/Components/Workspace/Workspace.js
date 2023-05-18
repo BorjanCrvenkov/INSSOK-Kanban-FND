@@ -4,6 +4,7 @@ import AddUserToWorkspace from "./AddUserToWorkspace";
 import UserWorkspaceRepository from "../Repository/UserWorkspaceRepository";
 import BoardIndex from "../Board/BoardIndex";
 import EditUserAccessModal from "./EditUserAccessModal";
+import {SpinningCircles} from "react-loading-icons";
 
 
 class Workspace extends React.Component {
@@ -33,7 +34,10 @@ class Workspace extends React.Component {
         const {isLoading, workspace, workspace_boards, users, displayAddUser} = this.state;
 
         if (isLoading) {
-            return <h1>Loading workspace...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading workspace...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         return (

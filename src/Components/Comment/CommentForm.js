@@ -1,5 +1,6 @@
 import React from 'react';
 import CommentRepository from "../Repository/CommentRepository";
+import {SpinningCircles} from "react-loading-icons";
 
 class CommentForm extends React.Component {
     constructor(props) {
@@ -57,7 +58,10 @@ class CommentForm extends React.Component {
         const {isLoading, isEdit} = this.state;
 
         if (isLoading && !isEdit) {
-            return <h1>Loading comment...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading comment...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         let columns = this.state.columns;

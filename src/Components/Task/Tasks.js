@@ -1,6 +1,7 @@
 import React from 'react';
 import Task from "./Task";
 import TaskRepository from "../Repository/TaskRepository"
+import {SpinningCircles} from "react-loading-icons";
 
 class Tasks extends React.Component {
     constructor(props) {
@@ -26,7 +27,10 @@ class Tasks extends React.Component {
         const {isLoading, tasks} = this.state;
 
         if (isLoading) {
-            return <h1>Loading tasks...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading tasks...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         if (!tasks.length) {

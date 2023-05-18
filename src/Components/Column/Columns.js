@@ -1,6 +1,7 @@
 import React from 'react';
 import ColumnRepository from "../Repository/ColumnRepository";
 import Column from "./Column";
+import {SpinningCircles} from "react-loading-icons";
 
 class Columns extends React.Component {
     constructor(props) {
@@ -26,7 +27,10 @@ class Columns extends React.Component {
         const {isLoading, columns} = this.state;
 
         if (isLoading) {
-            return <h1>Loading columns...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading columns...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         if (!columns.length) {

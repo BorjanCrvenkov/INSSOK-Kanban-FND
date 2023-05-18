@@ -1,6 +1,7 @@
 import React from 'react';
 import TaskRepository from "../Repository/TaskRepository";
 import ColumnRepository from "../Repository/ColumnRepository";
+import {SpinningCircles} from "react-loading-icons";
 
 class TaskForm extends React.Component {
     constructor(props) {
@@ -84,7 +85,10 @@ class TaskForm extends React.Component {
       const { isLoading, isEdit, workspace_id } = this.state;
     
       if (isLoading && !isEdit) {
-        return <h1>Loading task...</h1>;
+        return <div>
+            <h1 className='d-inline'>Loading task...</h1>
+            <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+        </div>
       }
     
       let columns = this.state.columns;

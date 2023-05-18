@@ -68,7 +68,10 @@ class FollowsRelation extends React.Component {
         }
 
         if (isLoading) {
-            return <h4>Loading action</h4>
+            return <div>
+                <h4 className='d-inline'>Loading action...</h4>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         return (

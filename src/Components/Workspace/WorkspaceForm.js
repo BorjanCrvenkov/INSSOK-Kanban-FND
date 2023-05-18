@@ -1,5 +1,6 @@
 import React from 'react';
 import WorkspaceRepository from "../Repository/WorkspaceRepository";
+import {SpinningCircles} from "react-loading-icons";
 
 class WorkspaceForm extends React.Component {
     constructor(props) {
@@ -70,9 +71,15 @@ class WorkspaceForm extends React.Component {
         const {isLoading, isEdit} = this.state;
 
         if (isLoading && isEdit) {
-            return <h1>Loading workspace...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading form...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         } else if (isLoading && !isEdit) {
-            return <h1>Loading form...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading form...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         let heading = isEdit ? <h1>Edit Workspace</h1> : <h1>Add Workspace</h1>;

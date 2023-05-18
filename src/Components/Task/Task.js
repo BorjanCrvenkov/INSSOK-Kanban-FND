@@ -1,5 +1,6 @@
 import React from 'react';
 import TaskRepository from "../Repository/TaskRepository";
+import {SpinningCircles} from "react-loading-icons";
 
 class Task extends React.Component {
     constructor(props) {
@@ -40,7 +41,10 @@ class Task extends React.Component {
         const {isLoading, task, isView, column, reporter, assignee} = this.state;
 
         if (isLoading) {
-            return <h1>Loading task...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading task...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         const link = isView ? <a href={`/tasks/edit/${task.id}`} className="btn btn-primary">Edit task</a>

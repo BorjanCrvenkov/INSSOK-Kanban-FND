@@ -1,5 +1,6 @@
 import React from 'react';
 import RoleRepository from "../Repository/RoleRepository";
+import {SpinningCircles} from "react-loading-icons";
 
 class RoleForm extends React.Component {
     constructor(props) {
@@ -64,9 +65,15 @@ class RoleForm extends React.Component {
         const { isLoading, isEdit } = this.state;
 
         if (isLoading && isEdit) {
-            return <h1>Loading role...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading role...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         } else if (isLoading && !isEdit) {
-            return <h1>Loading role...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading role...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         let heading = isEdit ? <h1>Edit Role</h1> : <h1>Add Role</h1>;

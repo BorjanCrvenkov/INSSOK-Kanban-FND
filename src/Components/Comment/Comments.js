@@ -3,6 +3,7 @@ import CommentFormForTaskModal from "./CommentFormForTaskModal";
 import CommentRepository from "../Repository/CommentRepository";
 import moment from 'moment';
 import {Form} from "react-bootstrap";
+import {SpinningCircles} from "react-loading-icons";
 
 class Comments extends React.Component {
     constructor(props) {
@@ -95,7 +96,10 @@ class Comments extends React.Component {
         }
 
         if (isLoading) {
-            return <h1>Loading comments...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading comments...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         return (

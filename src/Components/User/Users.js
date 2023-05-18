@@ -2,6 +2,7 @@ import React from 'react';
 import UserRepository from "../Repository/UserRepository";
 import User from "./User";
 import UserIndex from "./UserIndex";
+import {SpinningCircles} from "react-loading-icons";
 
 class Users extends React.Component {
     constructor(props) {
@@ -27,7 +28,10 @@ class Users extends React.Component {
         const {isLoading, users} = this.state;
 
         if (isLoading) {
-            return <h1>Loading users...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading users...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         if (!users.length) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import UserRepository from "../Repository/UserRepository";
+import {SpinningCircles} from "react-loading-icons";
 
 class UserForm extends React.Component {
     constructor(props) {
@@ -78,7 +79,12 @@ class UserForm extends React.Component {
         } else {
             id = await this.state.repository.add(data);
         }
-        window.location.href = 'http://localhost:3000/users/view/' + id
+
+        if(id){
+            window.location.href = 'http://localhost:3000/users/view/' + id
+        }else{
+
+        }
     }
 
     async componentDidMount() {
@@ -108,9 +114,15 @@ class UserForm extends React.Component {
         const {isLoading, isEdit} = this.state;
 
         if (isLoading && isEdit) {
-            return <h1>Loading user...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading user...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         } else if (isLoading && !isEdit) {
-            return <h1>Loading user...</h1>
+            return <div>
+                <h1 className='d-inline'>Loading user...</h1>
+                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            </div>
         }
 
         let heading = isEdit ? <h1>Edit User</h1> : <h1>Register</h1>;
