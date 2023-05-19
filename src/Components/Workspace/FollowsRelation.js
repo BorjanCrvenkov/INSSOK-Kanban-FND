@@ -92,7 +92,7 @@ class FollowsRelation extends React.Component {
 }
 
 function getFilters(taskId) {
-    let userId = JSON.parse(localStorage.getItem('user')).id;
+    let userId = JSON.parse(JSON.parse(localStorage.getItem('user'))).id;
 
     return {
         'user_id': userId,
