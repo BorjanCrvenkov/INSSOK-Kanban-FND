@@ -70,15 +70,21 @@ class Board extends React.Component {
 
         return (
             <div>
-                <div className="mt-2 mb-4">
+                <div className="mt-4 mb-4" style={{ border: "0px solid red", padding: "5px", display: "inline-block" }}>
                     <label>Filter by user</label>
-                    <select className="form-select" id="assigneeFilter" multiple
+                    <div className="icon-select" style={{ border: "0px solid green", padding: "5px", display: "flex" }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-funnel" viewBox="0 0 16 16" style={{ border: "0px solid #000", padding: "2px" }}>
+                            <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />
+                        </svg>
+                        <select className="form-select" id="assigneeFilter"
+                            style={{ flex: "1", marginLeft: "10px", border: "1px solid #cecece", padding: "5px", width: "200px", display: "inline-block" }}
                             onChange={this.filterByAssigneeOnChange.bind(this)}>
-                        <option value="All">All</option>
-                        {users && users.map(function (user, key) {
-                            return <option value={user.id}>{user.first_name} {user.last_name}</option>
-                        })}
-                    </select>
+                            <option value="All">All</option>
+                            {users && users.map(function (user, key) {
+                                return <option value={user.id}>{user.first_name} {user.last_name}</option>
+                            })}
+                        </select>
+                    </div>
                 </div>
                 <div style={{display: "flex", justifyContent: "center", height: "100%"}}>
                     <DragDropContext

@@ -38,20 +38,30 @@ class Workspaces extends React.Component {
         }
 
         return (
-            <div>
-                <div>
-                    <h1>Workspaces</h1>
-                    {localStorage.getItem('is_user') != 'true'
-                    && <a href={'/workspaces/add'} className='btn btn-primary mt-3'>Add workspace</a>
-                    }
-                </div>
-                <div className="row mt-3">
-                    {workspaces.map(function (workspace, key) {
-                        return <WorkspaceIndex workspace={workspace}/>
-                    })}
-                </div>
+            <div style={{ border: "0px solid red", padding: "10px" }}>
+              <div style={{ border: "0px solid magenta", padding: "10px" }}>
+                <h1>Workspaces</h1>
+                {localStorage.getItem('is_user') !== 'true' && (
+                  <a href="/workspaces/add" className="btn btn-primary mt-3">Add workspace</a>
+                )}
+              </div>
+              <div className="row mt-3" style={{ border: "0px solid green", padding: "10px" }}>
+                {workspaces.map(function (workspace, key) {
+                  return (
+                    <div className="col-md-4 mb-3" key={key}>
+                      <div style={{ border: "0px solid blue", padding: "10px", height: "100%" }}>
+                        <WorkspaceIndex workspace={workspace} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-        )
+          );
+          
+          
+          
+          
     }
 }
 
