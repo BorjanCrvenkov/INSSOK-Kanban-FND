@@ -21,6 +21,11 @@ class CommentFormForTaskModal extends React.Component {
     }
 
     async onSubmitForm() {
+        if (!this.state.body) {
+            alert("The comment cannot be empty.");
+            return;
+        }
+
         let elem = document.getElementById('posted').removeAttribute('hidden')
 
         const data = {

@@ -40,8 +40,8 @@ class FollowsRelation extends React.Component {
     async follow() {
         document.getElementById('loadingAction').removeAttribute('hidden')
 
-        let userId = JSON.parse(localStorage.getItem('user')).id;
-        let taskId = this.state.task.id
+        let userId = JSON.parse(JSON.parse(localStorage.getItem('user'))).id;
+        let taskId = this.state.task.id;
 
         let data = {
             'user_id': userId,
@@ -92,7 +92,7 @@ class FollowsRelation extends React.Component {
 }
 
 function getFilters(taskId) {
-    let userId = JSON.parse(localStorage.getItem('user')).id;
+    let userId = JSON.parse(JSON.parse(localStorage.getItem('user'))).id;
 
     return {
         'user_id': userId,
