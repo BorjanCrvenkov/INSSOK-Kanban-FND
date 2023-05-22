@@ -124,42 +124,73 @@ class BoardForm extends React.Component {
 
         return (
             <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-lg-8">
-                        {heading}
-                        <form onSubmit={this.onSubmitForm}>
-                            <div className="form-group">
-                                <label htmlFor="name">Name</label>
-                                <input type="text" name="name" value={this.state.name} onChange={this.onInputchange}
-                                       className="form-control" id="name"/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="description">Description</label>
-                                <input type="text" name="description" value={this.state.description}
-                                       onChange={this.onInputchange} className="form-control" id="description"/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="workspace_id">Workspace</label>
-                                <select name="workspace_id" onChange={this.onInputchange} defaultValue={workspace_id}
-                                        className="form-select" id="workspace_id">
-                                    <option></option>
-                                    {workspaces.map(function (workspace, key) {
-                                        return <option value={workspace.id}>{workspace.name}</option>
-                                    })}
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="task_prefix">Task Prefix</label>
-                                <input type="text" name="task_prefix" value={this.state.task_prefix}
-                                       onChange={this.onInputchange} className="form-control" id="task_prefix"/>
-                            </div>
-
-                            <button className="btn btn-primary mt-3">Submit</button>
-                        </form>
+              <div className="row justify-content-center">
+                <div className="col-lg-8" style={{ border: "2px solid #3E187A", borderRadius: "5px" }}>
+                  {heading}
+                  <form onSubmit={this.onSubmitForm}>
+                    <div className="form-group">
+                      <label htmlFor="name">Name</label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={this.state.name}
+                        onChange={this.onInputchange}
+                        className="form-control"
+                        id="name"
+                      />
                     </div>
+                    <div className="form-group">
+                      <label htmlFor="description">Description</label>
+                      <input
+                        type="text"
+                        name="description"
+                        value={this.state.description}
+                        onChange={this.onInputchange}
+                        className="form-control"
+                        id="description"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="workspace_id">Workspace</label>
+                      <select
+                        name="workspace_id"
+                        onChange={this.onInputchange}
+                        defaultValue={workspace_id}
+                        className="form-select"
+                        id="workspace_id"
+                      >
+                        <option></option>
+                        {workspaces.map(function (workspace, key) {
+                          return (
+                            <option value={workspace.id} key={key}>
+                              {workspace.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="task_prefix">Task Prefix</label>
+                      <input
+                        type="text"
+                        name="task_prefix"
+                        value={this.state.task_prefix}
+                        onChange={this.onInputchange}
+                        className="form-control"
+                        id="task_prefix"
+                      />
+                    </div>
+          
+                    <button className="btn btn-primary mt-3">Submit</button>
+                  </form>
+                  <br></br>
                 </div>
+              </div>
             </div>
-        );
+          );
+          
+          
+          
     }
 
 }

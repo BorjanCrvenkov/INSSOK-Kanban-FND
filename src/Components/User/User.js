@@ -55,15 +55,27 @@ class User extends React.Component {
         const link = this.getEditOrAddLink(user);
 
         return (
-            <div className="card m-3" style={{width: '25rem'}}>
-                <img className="card-img-top" src={user['image_link']}/>
-                <div className="card-body d-flex flex-column ">
-                    <h5 className="card-title">{user['first_name']} {user['last_name']}</h5>
-                    <p className="card-text">{user['email']}</p>
-                    <a href={`/users/edit/${user.id}`} className="btn btn-primary mt-auto">Edit user</a>
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-lg-8">
+                  <div className="profile-card" style={{ border: "0px solid blue", width: "100%" }}>
+                    <div className="profile-image" style={{ border: "0px solid red" }}>
+                      <img src={user['image_link']} alt="Profile Image" style={{ width: "300px", height: "300px" }} />
+                    </div>
+                    <div className="profile-details" style={{ border: "0px solid green" }}>
+                      <h2 style={{ border: "0px solid yellow" }}>{user['first_name']} {user['last_name']}</h2>
+                      <p style={{ border: "0px solid orange" }}>{user['email']}</p>
+                    </div>
+                    <div className="profile-actions" style={{ border: "0px solid purple" }}>
+                      <a href={`/users/edit/${user.id}`} className="btn btn-primary" style={{ border: "0px solid pink" }}>Edit User</a>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-        );
+          );
+          
+                       
     }
 
     getEditOrAddLink(user) {
