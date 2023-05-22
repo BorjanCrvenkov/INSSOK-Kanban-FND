@@ -19,10 +19,16 @@ class WorkspaceIndex extends React.Component {
         const {isLoading, workspace} = this.state;
 
         if (isLoading) {
-            return <div>
-                <h1 className='d-inline'>Loading workspace...</h1>
-                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
-            </div>
+          return (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '80vh' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <p style={{ textAlign: 'center' }}>Loading workspace...</p>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <SpinningCircles width="50" height="50" fill="#3E187A" />
+                </div>
+        </div>
+        )
         }
 
 

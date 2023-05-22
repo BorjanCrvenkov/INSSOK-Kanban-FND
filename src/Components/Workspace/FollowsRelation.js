@@ -68,10 +68,16 @@ class FollowsRelation extends React.Component {
         }
 
         if (isLoading) {
-            return <div>
-                <h4 className='d-inline'>Loading action...</h4>
-                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+            return (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '10vh' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <p style={{ textAlign: 'center' }}>Loading action...</p>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <SpinningCircles width="50" height="50" fill="#3E187A" />
+                    </div>
             </div>
+            )
         }
 
         return (
