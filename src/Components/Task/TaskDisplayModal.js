@@ -5,6 +5,15 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Comments from "../Comment/Comments";
 import FollowsRelation from "../Workspace/FollowsRelation";
+import lowestPriority from '../../Images/TaskPriority/lowest.png'
+import lowPriority from '../../Images/TaskPriority/low.png'
+import mediumPriority from '../../Images/TaskPriority/medium.png'
+import highPriority from '../../Images/TaskPriority/high.png'
+import highestPriority from '../../Images/TaskPriority/highest.png'
+import story from "../../Images/TaskType/Story.png";
+import bug from "../../Images/TaskType/Bug.png";
+import taskType from "../../Images/TaskType/Task.png";
+
 
 class TaskDisplayModal extends React.Component {
     constructor(props) {
@@ -21,8 +30,40 @@ class TaskDisplayModal extends React.Component {
         }));
     };
 
+    resolvePriorityImage() {
+        let priority = this.state.task.priority;
+
+        if (priority == Priority.LOWEST) {
+            return lowestPriority;
+        } else if (priority == Priority.LOW) {
+            return lowPriority;
+        } else if (priority == Priority.MEDIUM) {
+            return mediumPriority;
+        } else if (priority == Priority.HIGH) {
+            return highPriority;
+        } else if (priority == Priority.HIGHEST) {
+            return highestPriority;
+        }
+    }
+
+    resolveTypeImage() {
+        let type = this.state.task.type;
+
+        if (type == Type.STORY) {
+            return story;
+        } else if (type == Type.BUG) {
+            return bug;
+        } else if (type == Type.TASK) {
+            return taskType;
+        }
+    }
+
     render() {
         let {showModal, task} = this.state;
+
+        let priorityImage = this.resolvePriorityImage();
+        let typeImage = this.resolveTypeImage();
+
         return (
             <>
                 <Modal show={showModal} onHide={this.toggleModal} size="xl">
@@ -44,11 +85,14 @@ class TaskDisplayModal extends React.Component {
                             </div>
                             <div className="col-md-4 border rounded p-3">
                                 <div className="mb-3">
-                                    <FollowsRelation task={task} style={{'margin-left': '50px'}} />
+                                    <FollowsRelation task={task} style={{'margin-left': '50px'}}/>
                                 </div>
                                 <div className="mb-3">
                                     <label className="font-weight-bold">Priority:</label>
-                                    <p>{task.priority}</p>
+                                    <div>
+                                        <p className='d-inline'>{task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}</p>
+                                        <img style={{'margin-left': '10px', width: "20px", height: "20px"}} src={priorityImage}/>
+                                    </div>
                                 </div>
                                 <div className="mb-3">
                                     <label className="font-weight-bold">Due Date:</label>
@@ -56,18 +100,32 @@ class TaskDisplayModal extends React.Component {
                                 </div>
                                 <div className="mb-3">
                                     <label className="font-weight-bold">Type:</label>
-                                    <p>{task.type}</p>
+                                    <br/>
+                                    <p className='d-inline'>{task.type.charAt(0).toUpperCase() + task.type.slice(1)}</p>
+                                    <img style={{'margin-left': '10px', width: "20px", height: "20px"}} src={typeImage}/>
                                 </div>
                                 <div className="mb-3">
                                     <label className="font-weight-bold">Assignee:</label>
                                     {task.assignee && <p>
-                                        {task.assignee.first_name} {task.assignee.last_name}
+                                        <div>
+                                            <img className="card-img-top d-inline rounded-1"
+                                                 style={{width: "30px", height: "30px"}}
+                                                 src={task.assignee['image_link']}/>
+
+                                            <p className='d-inline'
+                                               style={{'margin-left': '10px'}}>{task.assignee.first_name} {task.assignee.last_name}</p>
+                                        </div>
                                     </p>}
                                 </div>
                                 <div className="mb-3">
                                     <label className="font-weight-bold">Reporter:</label>
                                     <p>
-                                        {task.reporter.first_name} {task.reporter.last_name}
+                                        <img className="card-img-top d-inline rounded-1"
+                                             style={{width: "30px", height: "30px"}} src={task.assignee['image_link']}/>
+
+                                        <p className='d-inline'
+                                           style={{'margin-left': '10px'}}>{task.reporter.first_name} {task.reporter.last_name}</p>
+
                                     </p>
                                 </div>
                             </div>
@@ -82,8 +140,20 @@ class TaskDisplayModal extends React.Component {
             </>
         );
     }
+}
 
+const Priority = {
+    LOWEST: 'lowest',
+    LOW: 'low',
+    MEDIUM: 'medium',
+    HIGH: 'high',
+    HIGHEST: 'highest',
+};
 
+const Type = {
+    STORY: 'story',
+    TASK: 'task',
+    BUG: 'bug'
 }
 
 export default TaskDisplayModal;
