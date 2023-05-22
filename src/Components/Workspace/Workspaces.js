@@ -38,26 +38,37 @@ class Workspaces extends React.Component {
         }
 
         return (
-            <div style={{ border: "0px solid red", padding: "10px" }}>
-              <div style={{ border: "0px solid magenta", padding: "10px" }}>
-                <h1>Workspaces</h1>
+          <div style={{ border: "0px solid red", padding: "10px" }}>
+
+            <div style={{ background: "linear-gradient(to right, #994ECC, #3E187A)", border: "0px solid magenta", padding: "10px", display: "flex", justifyContent: "space-between", alignItems: "center", borderRadius: "10px" }}>
+              <h1 style={{ border: "0px dashed black" }}>Workspaces</h1>
+              <div style={{ display: "flex", alignItems: "center", border: "0px dashed green" }}>
                 {localStorage.getItem('is_user') !== 'true' && (
-                  <a href="/workspaces/add" className="btn btn-primary mt-3">Add workspace</a>
+                  <div className="ml-auto">
+                    <a href="/workspaces/add" className="btn btn-primary" style={{ backgroundColor: "#994ECC", border: "0px dashed green", fontSize: "20px", padding: "10px 20px" }}>Add workspace</a>
+                  </div>
                 )}
               </div>
-              <div className="row mt-3" style={{ border: "0px solid green", padding: "10px" }}>
-                {workspaces.map(function (workspace, key) {
-                  return (
-                    <div className="col-md-4 mb-3" key={key}>
-                      <div style={{ border: "0px solid blue", padding: "10px", height: "100%" }}>
-                        <WorkspaceIndex workspace={workspace} />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
             </div>
-          );
+
+
+                
+
+            <ol className="mt-3" style={{ border: "0px solid green", padding: "10px", listStyleType: "decimal" }}>
+              {workspaces.map(function (workspace, key) {
+                return (
+                  <li key={key}>
+                    <div style={{ border: "0px solid blue", padding: "10px", marginBottom: "10px" }}>
+                      <WorkspaceIndex workspace={workspace} />
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        );
+        
+        
           
           
           

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 const Header = () => {
     return (
       <header>
-        <nav className="navbar navbar-expand-lg navbar-light" style={{ background: "linear-gradient(to right, #82baff, #ff82ba)" }}>
+        <nav className="navbar navbar-expand-lg navbar-light" style={{ background: "linear-gradient(to right, #994ECC, #3E187A)" }}>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             {localStorage.getItem('token') != null && (
               <div className="navbar-nav ml-auto">

@@ -25,17 +25,33 @@ class WorkspaceIndex extends React.Component {
             </div>
         }
 
+
         return (
-            <div>
-              <div className="card" style={{ border: "0px dashed yellow", height: "100%", background: "linear-gradient(to right, #ff82ba, #82baff)" }}>
-                <div className="card-body d-flex flex-column justify-content-between" style={{ border: "0px dashed cyan" }}>
-                  <h5 className="card-title">{workspace['name']}</h5>
-                  <p className="card-text">{workspace['description']}</p>
-                  <a href={`/workspaces/view/${workspace.id}`} className="btn btn-primary">View workspace</a>
+          <div>
+            <div className="card" style={{ border: "0px solid lime", height: "100%", background: "linear-gradient(to right, #994ECC, #3E187A)" }}>
+              <div className="card-body d-flex flex-column" style={{ border: "0px solid black" }}>
+                <div className="d-flex justify-content-between align-items-center" style={{ border: "0px dashed cyan" }}>
+                  <div style={{ border: "0px dashed red" }}>
+                    <h5 className="card-title" style={{ border: "0px dashed yellow" }}>{workspace['name']}</h5>
+                    <p className="card-text" style={{ border: "0px dashed red" }}>
+                      {workspace['description'].length > 100
+                        ? `${workspace['description'].substring(0, 100)}...`
+                        : workspace['description']
+                      }
+                    </p>
+                  </div>
+                  <div className="ml-auto d-flex align-items-center" style={{ border: "0px dashed black" }}>
+                    <a href={`/workspaces/view/${workspace.id}`} className="btn btn-primary" style={{ backgroundColor: "#994ECC" }}>View workspace</a>
+                  </div>
                 </div>
               </div>
             </div>
-          );
+          </div>
+        );
+        
+        
+        
+        
           
           
           

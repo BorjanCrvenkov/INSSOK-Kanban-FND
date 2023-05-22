@@ -32,7 +32,7 @@ class BoardIndex extends React.Component {
         }
 
         return (
-            <div className="col-sm-4 card m-3" style={{width: '25rem', background: "linear-gradient(to right, #ff82ba, #82baff)"}}>
+            <div className="col-sm-4 card m-3" style={{width: '25rem', background: "linear-gradient(to right, #994ECC, #3E187A)"}}>
                 <div className="card-body d-flex flex-column ">
                     <h5 className="card-title">{board['name']}</h5>
                     <p className="card-text">{board['description']}</p>
