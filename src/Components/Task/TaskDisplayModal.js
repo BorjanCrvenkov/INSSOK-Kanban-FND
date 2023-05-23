@@ -13,6 +13,7 @@ import highestPriority from '../../Images/TaskPriority/highest.png'
 import story from "../../Images/TaskType/Story.png";
 import bug from "../../Images/TaskType/Bug.png";
 import taskType from "../../Images/TaskType/Task.png";
+import TaskAssignee from "./TaskAssignee";
 
 
 class TaskDisplayModal extends React.Component {
@@ -105,23 +106,13 @@ class TaskDisplayModal extends React.Component {
                                     <img style={{'margin-left': '10px', width: "20px", height: "20px"}} src={typeImage}/>
                                 </div>
                                 <div className="mb-3">
-                                    <label className="font-weight-bold">Assignee:</label>
-                                    {task.assignee && <p>
-                                        <div>
-                                            <img className="card-img-top d-inline rounded-1"
-                                                 style={{width: "30px", height: "30px"}}
-                                                 src={task.assignee['image_link']}/>
-
-                                            <p className='d-inline'
-                                               style={{'margin-left': '10px'}}>{task.assignee.first_name} {task.assignee.last_name}</p>
-                                        </div>
-                                    </p>}
+                                    <TaskAssignee task={task}/>
                                 </div>
                                 <div className="mb-3">
                                     <label className="font-weight-bold">Reporter:</label>
                                     <p>
                                         <img className="card-img-top d-inline rounded-1"
-                                             style={{width: "30px", height: "30px"}} src={task.assignee['image_link']}/>
+                                             style={{width: "30px", height: "30px"}} src={task.reporter['image_link']}/>
 
                                         <p className='d-inline'
                                            style={{'margin-left': '10px'}}>{task.reporter.first_name} {task.reporter.last_name}</p>
