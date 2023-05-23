@@ -84,7 +84,7 @@ class TaskForm extends React.Component {
     render() {
       const { isLoading, isEdit, workspace_id } = this.state;
     
-      if (isLoading && !isEdit) {
+      if (isLoading) {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '80vh' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
