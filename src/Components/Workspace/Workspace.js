@@ -48,46 +48,62 @@ class Workspace extends React.Component {
 
         return (
             <div>
-                <h3>{workspace['name']}</h3>
-                <h4>{workspace['description']}</h4>
-                <div className="btn-group mt-3" role="group">
+                <h3 style={{border: "0px solid red"}}>{workspace['name']}</h3>
+                <h4 style={{border: "0px solid green"}}>{workspace['description']}</h4>
+                <div style={{border: "0px solid blue"}} className="btn-group mt-3" role="group">
                     {localStorage.getItem('is_user') != 'true'
-                    && <button className="btn btn-primary" onClick={() => {
+                    && <button style={{border: "0px solid cyan"}} className="btn btn-primary" onClick={() => {
                         this.setState({displayAddUser: !this.state.displayAddUser})
                     }}>Add user to workspace</button>
                     }
                     {localStorage.getItem('is_user') != 'true'
                     && <a href={`/workspaces/edit/${workspace.id}`}
-                          className="btn btn-success" style={{'margin-left': '10px'}}>Edit workspace</a>
+                          className="btn btn-success" style={{'border: "0px solid magenta", margin-left': '10px'}}>Edit workspace</a>
                     }
                     {localStorage.getItem('is_admin') == 'true'
-                    && <button onClick={this.delete} className="btn btn-danger"
-                             style={{'margin-left': '10px'}}>Delete workspace
+                    && <button  onClick={this.delete} className="btn btn-danger"
+                             style={{'border: "0px solid yellow", margin-left': '10px'}}>Delete workspace
                     </button>
                     }
                 </div>
-                <div className="mt-3">
+                <div style={{border: "0px solid pink"}} className="mt-3">
                     {displayAddUser &&
                     <AddUserToWorkspace workspace_id={workspace.id}/>
                     }
                 </div>
-                <div className="mt-3">
-                    <div><h4>
-                        {workspace_boards && workspace_boards.length > 0 ? "All workspace boards:" : "This workspace doesn't have boards"}
-                    </h4>
-                        <a href={'/boards/add'} className='btn btn-primary'>Add board</a>
+                <div style={{ border: "0px solid purple", borderRadius: "10px", display: "flex", justifyContent: "space-between" }} className="mt-3">
+                  <div>
+                    <div style={{ border: "0px solid lime" }}>
+                        <h4 style={{ border: "0px solid red" }}>
+                            {workspace_boards && workspace_boards.length > 0 ? "All workspace boards:" : "This workspace doesn't have boards"}
+                        </h4>
+                        <div style={{ marginLeft: "10px", alignSelf: "flex-start" }}>
+                            <a href={'/boards/add'} className='btn btn-primary'>Add board</a>
+                        </div>
                     </div>
+                  </div>
+                  <div style={{ border: "0px dashed magenta", display: "flex", alignItems: "center" }}>
+                    <div style={{ border: "0px dashed lime" }}>
+                      <h4 style={{ border: "0px dashed red" }}>Search boards</h4>
+                    </div>
+                    <div style={{ border: "0px dashed blue", marginLeft: "10px" }}>
+                      <input style={{ border: "0px dashed red"}} type="text" className="form-control" placeholder="Search..." />
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-3" style={{display: "flex", justifyContent: "center", height: "100%"}}>
-                    {workspace_boards &&
+
+
+
+                <div className="mt-3" style={{ border: "0px solid green", display: "flex", justifyContent: "center", flexWrap: "wrap", height: "100%" }}>
+                  {workspace_boards &&
                     workspace_boards.map(function (board, key) {
-                        return <BoardIndex board={board} className="mt-3"/>
-                    })
-                    }
+                      return <BoardIndex board={board} className="mt-3" />;
+                    })}
                 </div>
-                {users && <div className="mt-4">
-                    <h3>Users that have access to this workspace:</h3>
-                    <table className="table table-hover">
+
+                {users && <div style={{border: "0px solid blue"}} className="mt-4">
+                    <h3 style={{border: "0px solid magenta"}} >Users that have access to this workspace:</h3>
+                    <table style={{border: "0px solid yellow"}} className="table table-hover">
                         <thead>
                         <tr>
                             <th></th>
