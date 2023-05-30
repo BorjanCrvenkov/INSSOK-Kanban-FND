@@ -34,18 +34,23 @@ class Workspace extends React.Component {
 
     filterBoards() {
         const { workspace_boards, searchQuery } = this.state;
-
+      
         if (!searchQuery || searchQuery.trim() === "") {
-            this.setState({ filtered_boards: null });
-            return;
+          this.setState({ filtered_boards: workspace_boards });
+          return;
         }
-
-        const filteredBoards = workspace_boards.filter((board) =>
-            board.name.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+      
+        const lowerCaseQuery = searchQuery.toLowerCase();
+        const filteredBoards = workspace_boards.filter((board) => {
+          const lowerCaseName = board.name.toLowerCase();
+          return lowerCaseName.startsWith(lowerCaseQuery);
+        });
+      
         this.setState({ filtered_boards: filteredBoards });
-    }
-
+      }
+      
+      
+      
     render() {
         const {
             isLoading,
@@ -121,11 +126,11 @@ class Workspace extends React.Component {
                         </div>
                         <div style={{ border: "0px dashed blue", marginLeft: "10px" }}>
                             <input
-                                style={{ border: "2px solid #3E187A" }}
+                                style={{ border: "0px solid #3E187A" }}
                                 type="text"
                                 className="form-control"
                                 placeholder="Search..."
-                                value={searchQuery}
+                                value={this.state.searchQuery} 
                                 onChange={(e) => {
                                     this.setState({ searchQuery: e.target.value }, this.filterBoards);
                                 }}
@@ -135,10 +140,24 @@ class Workspace extends React.Component {
                 </div>
 
                 <div className="mt-3" style={{ border: "0px solid green", display: "flex", justifyContent: "center", flexWrap: "wrap", height: "100%" }}>
-                    {(filtered_boards || workspace_boards).map(function (board, key) {
-                        return <BoardIndex board={board} className="mt-3" />;
-                    })}
+                  {searchQuery.trim() !== "" ? (
+                    filtered_boards && filtered_boards.length > 0 ? (
+                        filtered_boards.map((board) => (
+                            <BoardIndex board={board} className="mt-3" key={board.id} />
+                          ))                       
+                    ) : (
+                      <p>No matching boards found.</p>
+                    )
+                  ) : (
+                    workspace_boards.map((board) => (
+                        <BoardIndex board={board} className="mt-3" key={board.id} />
+                      ))   
+                  )}
                 </div>
+
+
+
+
 
                 {users && (
                     <div style={{ border: "0px solid blue" }} className="mt-4">

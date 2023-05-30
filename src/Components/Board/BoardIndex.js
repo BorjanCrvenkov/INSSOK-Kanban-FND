@@ -44,7 +44,7 @@ class BoardIndex extends React.Component {
                 <p className="card-text text-white" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {board['description']}
                 </p>
-                <a href={`/boards/view/${board.id}`} className="btn btn-primary mt-auto" style={{ backgroundColor: "#994ECC"}}>View board</a>
+                <a href={`/boards/view/${board.id}`} className="btn btn-primary mt-2">View board</a>
                 {localStorage.getItem('is_user') !== 'true' && (
                   <a href={`/boards/edit/${board.id}`} className='btn btn-secondary mt-2'>Edit board</a>
                 )}
