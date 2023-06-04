@@ -1,5 +1,6 @@
 import React from "react";
 import {SpinningCircles} from "react-loading-icons";
+import BoardRepository from "../Repository/BoardRepository";
 
 class BoardIndex extends React.Component {
     constructor(props) {
@@ -7,6 +8,7 @@ class BoardIndex extends React.Component {
         this.state = {
             isLoading: true,
             board: props.board,
+            repository: new BoardRepository(),
         };
         this.delete = this.delete.bind(this)
     }
