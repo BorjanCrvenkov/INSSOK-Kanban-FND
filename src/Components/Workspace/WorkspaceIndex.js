@@ -38,8 +38,8 @@ class WorkspaceIndex extends React.Component {
               <div className="card-body d-flex flex-column" style={{ border: "0px solid black" }}>
                 <div className="d-flex justify-content-between align-items-center" style={{ border: "0px dashed cyan" }}>
                   <div style={{ border: "0px dashed red" }}>
-                    <h5 className="card-title" style={{ border: "0px dashed yellow" }}>{workspace['name']}</h5>
-                    <p className="card-text" style={{ border: "0px dashed red" }}>
+                    <h5 className="card-title" style={{ border: "0px dashed yellow", color: "white"}}>{workspace['name']}</h5>
+                    <p className="card-text" style={{ border: "0px dashed red", color: "white" }}>
                       {workspace['description'].length > 100
                         ? `${workspace['description'].substring(0, 100)}...`
                         : workspace['description']
