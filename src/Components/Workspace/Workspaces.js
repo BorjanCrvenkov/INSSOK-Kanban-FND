@@ -49,7 +49,7 @@ class Workspaces extends React.Component {
           <div style={{ border: "0px solid red", padding: "10px" }}>
 
             <div style={{ background: "linear-gradient(to right, #994ECC, #3E187A)", border: "0px solid magenta", padding: "10px", display: "flex", justifyContent: "space-between", alignItems: "center", borderRadius: "10px" }}>
-              <h1 style={{ border: "0px dashed black" }}>Workspaces</h1>
+              <h1 style={{ border: "0px dashed black", color: "white" }}>Workspaces</h1>
               <div style={{ display: "flex", alignItems: "center", border: "0px dashed green" }}>
                 {localStorage.getItem('is_user') !== 'true' && (
                   <div className="ml-auto">
