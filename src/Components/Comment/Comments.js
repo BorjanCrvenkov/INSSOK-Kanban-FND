@@ -200,11 +200,15 @@ class Comments extends React.Component {
                                 </button>
                             </div>
                             }
-                            <button style={{width: '200px'}} className='btn btn-secondary d-inline'
-                                    onClick={() => this.openEditForm(comment)}>{!displayForm ? 'Edit' : (displayForCommentId == comment.id) ? 'Close' : 'Edit'}</button>
-                            <button style={{width: '200px', 'margin-left': '10px'}} className='btn btn-danger d-inline'
-                                    onClick={() => this.delete(comment.id)}>Delete Comment
-                            </button>
+                            {localStorage.getItem('is_admin_role') ||
+                            <div>
+                                <button style={{width: '200px'}} className='btn btn-secondary d-inline'
+                                        onClick={() => this.openEditForm(comment)}>{!displayForm ? 'Edit' : (displayForCommentId == comment.id) ? 'Close' : 'Edit'}</button>
+                                <button style={{width: '200px', 'margin-left': '10px'}} className='btn btn-danger d-inline'
+                                        onClick={() => this.delete(comment.id)}>Delete Comment
+                                </button>
+                            </div>
+                            }
                             <p className="text-muted">
                                 Posted
                                 by: {comment.user.first_name} {comment.user.last_name} {moment(comment.created_at).fromNow()}
