@@ -200,7 +200,7 @@ class Comments extends React.Component {
                                 </button>
                             </div>
                             }
-                            {localStorage.getItem('is_admin_role') ||
+                            {localStorage.getItem('is_admin_role') &&
                             <div>
                                 <button style={{width: '200px'}} className='btn btn-secondary d-inline'
                                         onClick={() => this.openEditForm(comment)}>{!displayForm ? 'Edit' : (displayForCommentId == comment.id) ? 'Close' : 'Edit'}</button>

@@ -134,14 +134,19 @@ class TaskDisplayModal extends React.Component {
                                            style={{'margin-left': '10px'}}>{task.reporter.first_name} {task.reporter.last_name}</p>
                                     </p>
                                 </div>
-                                <div>
-                                    <Link to={`/tasks/edit/${task.id}`} style={{ width: '350px' }} className='btn btn-secondary'>Edit task</Link>
-                                    <button onClick={this.delete} className='btn btn-danger' style={{width: '350px', 'margin-top': '10px'}}>Delete Task</button>
+                                {localStorage.getItem('is_admin_role') && <div>
+                                    <Link to={`/tasks/edit/${task.id}`} style={{width: '350px'}}
+                                          className='btn btn-secondary'>Edit task</Link>
+                                    <button onClick={this.delete} className='btn btn-danger'
+                                            style={{width: '350px', 'margin-top': '10px'}}>Delete Task
+                                    </button>
                                     <div id='deleting' hidden={true}>
                                         <p className='d-inline'>Task is being deleted</p>
-                                        <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+                                        <SpinningCircles width="25" height="25" fill="#999"
+                                                         style={{'margin-left': '10px'}}/>
                                     </div>
                                 </div>
+                                }
                             </div>
                         </div>
                     </Modal.Body>
