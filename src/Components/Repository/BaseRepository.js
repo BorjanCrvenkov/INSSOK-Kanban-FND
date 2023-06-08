@@ -164,8 +164,6 @@ export default class Repository {
                 this.handleErrorResponse(error)
             });
 
-        console.log(response);
-
         if(!response){
             return ;
         }

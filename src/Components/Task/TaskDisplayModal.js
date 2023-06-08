@@ -14,6 +14,9 @@ import story from "../../Images/TaskType/Story.png";
 import bug from "../../Images/TaskType/Bug.png";
 import taskType from "../../Images/TaskType/Task.png";
 import TaskAssignee from "./TaskAssignee";
+import TaskRepository from "../Repository/TaskRepository";
+import {SpinningCircles} from "react-loading-icons";
+import {Link} from "react-router-dom";
 
 
 class TaskDisplayModal extends React.Component {
@@ -21,8 +24,19 @@ class TaskDisplayModal extends React.Component {
         super(props);
         this.state = {
             showModal: props.showModal ?? false,
-            task: props.task
+            task: props.task,
+            repository: new TaskRepository(),
         };
+        this.delete = this.delete.bind(this)
+    }
+
+    async delete(e) {
+        e.preventDefault()
+        document.getElementById('deleting').removeAttribute('hidden')
+
+        await this.state.repository.deleteModel(this.state.task.id);
+
+        window.location.reload(false);
     }
 
     toggleModal = () => {
@@ -92,7 +106,8 @@ class TaskDisplayModal extends React.Component {
                                     <label className="font-weight-bold">Priority:</label>
                                     <div>
                                         <p className='d-inline'>{task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}</p>
-                                        <img style={{'margin-left': '10px', width: "20px", height: "20px"}} src={priorityImage}/>
+                                        <img style={{'margin-left': '10px', width: "20px", height: "20px"}}
+                                             src={priorityImage}/>
                                     </div>
                                 </div>
                                 <div className="mb-3">
@@ -103,7 +118,8 @@ class TaskDisplayModal extends React.Component {
                                     <label className="font-weight-bold">Type:</label>
                                     <br/>
                                     <p className='d-inline'>{task.type.charAt(0).toUpperCase() + task.type.slice(1)}</p>
-                                    <img style={{'margin-left': '10px', width: "20px", height: "20px"}} src={typeImage}/>
+                                    <img style={{'margin-left': '10px', width: "20px", height: "20px"}}
+                                         src={typeImage}/>
                                 </div>
                                 <div className="mb-3">
                                     <TaskAssignee task={task}/>
@@ -116,8 +132,15 @@ class TaskDisplayModal extends React.Component {
 
                                         <p className='d-inline'
                                            style={{'margin-left': '10px'}}>{task.reporter.first_name} {task.reporter.last_name}</p>
-
                                     </p>
+                                </div>
+                                <div>
+                                    <Link to={`/tasks/edit/${task.id}`} style={{ width: '350px' }} className='btn btn-secondary'>Edit task</Link>
+                                    <button onClick={this.delete} className='btn btn-danger' style={{width: '350px', 'margin-top': '10px'}}>Delete Task</button>
+                                    <div id='deleting' hidden={true}>
+                                        <p className='d-inline'>Task is being deleted</p>
+                                        <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+                                    </div>
                                 </div>
                             </div>
                         </div>

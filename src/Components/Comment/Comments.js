@@ -16,9 +16,21 @@ class Comments extends React.Component {
             reload: false,
             isAscending: false,
             sorting_comments_helper: null,
+            body: '',
+            displayForm: false,
+            displayForCommentId: true,
         };
 
         this.handleToggle = this.handleToggle.bind(this);
+        this.onSubmitForm = this.onSubmitForm.bind(this);
+        this.onInputChange = this.onInputChange.bind(this);
+        this.openEditForm = this.openEditForm.bind(this);
+    }
+
+    onInputChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
     }
 
     async componentDidMount() {
@@ -28,9 +40,9 @@ class Comments extends React.Component {
 
         let data = await this.state.repository.index(filters, sorts, includes);
 
-        if(!data){
+        if (!data) {
             this.setState({isLoading: false})
-            return ;
+            return;
         }
 
         let data_clone = data.map((x) => x);
@@ -44,20 +56,17 @@ class Comments extends React.Component {
         this.setState({isLoading: false})
     }
 
-    bubbleSort(arr, asc){
+    bubbleSort(arr, asc) {
         let i, j, temp;
         let n = arr.length;
 
-        for (i = 0; i < n - 1; i++)
-        {
-            for (j = 0; j < n - i - 1; j++)
-            {
-                if (asc && arr[j].id > arr[j + 1].id)
-                {
+        for (i = 0; i < n - 1; i++) {
+            for (j = 0; j < n - i - 1; j++) {
+                if (asc && arr[j].id > arr[j + 1].id) {
                     temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
-                }else if(!asc && arr[j].id < arr[j + 1].id){
+                } else if (!asc && arr[j].id < arr[j + 1].id) {
                     temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
@@ -75,7 +84,7 @@ class Comments extends React.Component {
         this.sortComments();
     }
 
-    sortComments(){
+    sortComments() {
         let comments = this.state.comments;
 
         this.setState({comments: this.state.sorting_comments_helper});
@@ -88,8 +97,38 @@ class Comments extends React.Component {
         }));
     };
 
+    async onSubmitForm(id) {
+        const data = {
+            'body': this.state.body
+        };
+
+        await new CommentRepository().update(id, JSON.stringify(data));
+
+        this.reload();
+    }
+
+    openEditForm(comment) {
+        if (comment.id != this.state.displayForCommentId) {
+            this.setState({displayForm: false})
+        }
+
+        this.setState((prevState) => ({
+            body: comment.body,
+            displayForm: !prevState.displayForm,
+            displayForCommentId: comment.id
+        }));
+    }
+
+    delete = async (id) => {
+        document.getElementById('deleting').removeAttribute('hidden');
+
+        await this.state.repository.deleteModel(id);
+
+        this.reload();
+    };
+
     render() {
-        const {isLoading, comments, task} = this.state;
+        const {isLoading, comments, task, body, displayForm, displayForCommentId} = this.state;
 
         if (this.state.reload) {
             return <Comments task={task}/>;
@@ -97,14 +136,20 @@ class Comments extends React.Component {
 
         if (isLoading) {
             return (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '20vh' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <p style={{ textAlign: 'center' }}>Loading comments...</p>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '20vh'
+                }}>
+                    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                        <p style={{textAlign: 'center'}}>Loading comments...</p>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <SpinningCircles width="50" height="50" fill="#3E187A" />
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <SpinningCircles width="50" height="50" fill="#3E187A"/>
                     </div>
-            </div>
+                </div>
             )
         }
 
@@ -112,31 +157,60 @@ class Comments extends React.Component {
             <div>
                 <div>
                     <h5 className="mb-3 border-bottom pb-3">Comments</h5>
-                    <button onClick={this.handleToggle} className='d-inline btn btn-primary'>Change comment sorting</button>
+                    <button onClick={this.handleToggle} className='d-inline btn btn-primary'>Change comment sorting
+                    </button>
 
                     <div className='d-inline align-top' style={{'margin-left': '300px'}}>
                         <label style={{'padding-right': '10px'}}>Oldest</label>
-                            <Form.Check
-                                type="switch"
-                                id="toggle-switch"
-                                checked={this.state.isAscending}
-                                onChange={this.handleToggle}
-                                disabled
-                                className='d-inline'
-                            />
-                            <label style={{'padding-left': '10px'}}>Latest</label>
+                        <Form.Check
+                            type="switch"
+                            id="toggle-switch"
+                            checked={this.state.isAscending}
+                            onChange={this.handleToggle}
+                            disabled
+                            className='d-inline'
+                        />
+                        <label style={{'padding-left': '10px'}}>Latest</label>
                     </div>
                 </div>
 
                 <div className="border-bottom pb-3 mb-3 mt-3">
                     <CommentFormForTaskModal task={this.state.task} reload={this.reload}/>
                 </div>
-                {comments && comments.map(function (comment, key) {
+                {comments && comments.map((comment, key) => {
                     return (
                         <div className="border-bottom pb-3 mb-3" key={key}>
+                            {(!displayForm || displayForCommentId != comment.id) &&
                             <p>{comment.body}</p>
+                            }
+
+                            <div id='deleting' hidden={true}>
+                                <p className='d-inline'>Comment is being deleted</p>
+                                <SpinningCircles width="25" height="25" fill="#999" style={{'margin-left': '10px'}}/>
+                            </div>
+
+                            {displayForm && displayForCommentId == comment.id &&
+                            <div>
+                                <input type='text' className="form-control d-inline"
+                                       style={{width: '85%', 'margin-bottom': "10px"}} onChange={this.onInputChange}
+                                       value={body} name='body'/>
+                                <button className="btn btn-primary"
+                                        style={{'margin-left': '20px', 'margin-top': '-5px'}}
+                                        onClick={() => this.onSubmitForm(comment.id)}>Submit
+                                </button>
+                            </div>
+                            }
+                            <button style={{width: '200px'}} className='btn btn-secondary d-inline'
+                                    onClick={() => this.openEditForm(comment)}>{!displayForm ? 'Edit' : (displayForCommentId == comment.id) ? 'Close' : 'Edit'}</button>
+                            <button style={{width: '200px', 'margin-left': '10px'}} className='btn btn-danger d-inline'
+                                    onClick={() => this.delete(comment.id)}>Delete Comment
+                            </button>
                             <p className="text-muted">
-                                Posted by: {comment.user.first_name} {comment.user.last_name} {moment(comment.created_at).fromNow()}
+                                Posted
+                                by: {comment.user.first_name} {comment.user.last_name} {moment(comment.created_at).fromNow()}
+                            </p>
+                            <p className="text-muted">
+                                Last edited {moment(comment.updated_at).fromNow()}
                             </p>
                         </div>
                     );
