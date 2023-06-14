@@ -9,10 +9,10 @@ const Header = () => {
             {localStorage.getItem('token') != null && (
               <div className="navbar-nav ml-auto">
                 <Link to={"/workspaces"} className="nav-item nav-link" style={{ color: '#ffffff' }}>Workspaces</Link>
-                {localStorage.getItem('is_admin_role') && (
+                {localStorage.getItem('is_admin') && (
                   <Link to={"/users"} className="nav-item nav-link" style={{ color: '#ffffff' }}>Users</Link>
                 )}
-                {localStorage.getItem('is_admin_role') && (
+                {localStorage.getItem('is_admin') && (
                   <Link to={"/roles"} className="nav-item nav-link" style={{ color: '#ffffff' }}>Roles</Link>
                 )}
               </div>

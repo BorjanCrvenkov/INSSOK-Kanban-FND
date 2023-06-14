@@ -134,7 +134,7 @@ class TaskDisplayModal extends React.Component {
                                            style={{'margin-left': '10px'}}>{task.reporter.first_name} {task.reporter.last_name}</p>
                                     </p>
                                 </div>
-                                {localStorage.getItem('is_admin_role') && <div>
+                                {localStorage.getItem('is_admin') && <div>
                                     <Link to={`/tasks/edit/${task.id}`} style={{width: '350px'}}
                                           className='btn btn-secondary'>Edit task</Link>
                                     <button onClick={this.delete} className='btn btn-danger'
